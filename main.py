@@ -166,25 +166,22 @@ def importCard():
         while foilCheck.upper() not in ["Y", "N"]:
             foilCheck = input("Please enter an appropriate response:\n")
 
-    #inputs tcg, mtg has reliable pricing websites (scryfall / magic madhouse), but ptcg needs user input as ebay is the main selling platform
-    priceCheck = "n"
-
     #uses webScraping module to retrieve card image
-    imgCheck = "n"
+    webScrapeCheck = "n"
 
-    while imgCheck.upper() == "N":
-        image = 0
+    while webScrapeCheck.upper() == "N":
+        webData = 0
         if tcg == "MTG":
-            image = webScraping.cardImageMTG(name, set)
+            webData = webScraping.cardImageMTG(name, set, setNum)
         
-        elif tcg == "PTCG":
-            image = webScraping.cardImagePTCG(name, set)
+        # elif tcg == "PTCG":
+        #     image = webScraping.cardImagePTCG(name, set)
 
-        imgCheck = input("Does the following URL match your card, respond with Y/N:\n" + image + "\n")
-        while imgCheck.upper() not in ["Y", "N"]:
-            imgCheck = input("Please enter an appropriate response:\n")
+        webScrapeCheck = input("Does the following information match your card, respond with Y/N:\n" + webData + "\n")
+        while webScrapeCheck.upper() not in ["Y", "N"]:
+            webScrapeCheck = input("Please enter an appropriate response:\n")
 
-    returnList = [tcg, name, rarity, set, setNum, foil, image]
+    returnList = [tcg, name, rarity, set, setNum, foil, webData]
     return returnList
 
 

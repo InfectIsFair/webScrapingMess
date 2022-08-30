@@ -1,0 +1,40 @@
+Needs to log cards with the following characteristics:
+
+  TCG Game
+
+  Card Name
+
+  Card Rarity
+
+  Card Set
+
+  Card Set #
+
+  Foil Variance
+
+  Card Image
+
+  Card price
+
+
+Needs to display a comfortable UI, similar to deckbox.org (the main features are: searching based on card traits (name, set), sorting based on card traits, and displaying an image when hover on card name)
+
+
+Needs to connect to scryfall to: retrieve card image, check card name, check if the first card on search is what I want (is 'cardname' the card you were looking for?), and retrieve card price (converted to
+                                                                                                                                                                                                           £)
+
+Has to allow me to import CSV lists of cards
+
+
+Menu Options:
+
+  Import card (singular)
+
+  Import CSV (name csv file)
+
+  Show collection (open GUI)
+
+  Quit
+
+
+In future add a system to add decks, and show where cards are, i.e. a card trait so I can choose which variants and which cards are IN a deck

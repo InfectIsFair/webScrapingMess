@@ -1,42 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"/>
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+        - js
+        - pyodide
+    </py-env>
 
-    <title>Troy's Card Database</title>
 </head>
+
 <body>
-    <form method="post" autocomplete="off">
-        <?php
-        echo "<label for='card-name'>Enter the name of your card:</label>\n";
-        echo "<input type='text' id='card-name' name='card-name' required ";
-        if (!empty($_POST)) {
-            echo "value='" . $_POST["card-name"] . "'";
-        }
-        echo ">\n";
-        echo "<label for='card-set'>Enter the set of your card:</label>\n";
-        echo "<input type='text' id='card-set' name='card-set' required ";
-        if (!empty($_POST)) {
-            echo "value='" . $_POST["card-set"] . "'";
-        }
-        echo ">\n";
-        echo "<label for='temp-image'>Enter the image url</label>\n";
-        echo "<input type='text' id='temp-image' name='temp-image' required ";
-        if (!empty($_POST)) {
-            echo "value='" . $_POST["temp-image"] . "'";
-        }
-        echo ">\n";
-        ?>
-        <input type="submit" value="Submit">
-    </form>
-    <?php
-        if (!empty($_POST)) {
-            echo "<img src='" . $_POST["temp-image"] . "'>";
-        }
-    ?>
+
+<main>
+
+    <form onsubmit="return false">
+        <select name="countries" id="countries">
+            <option value="India">India</option>
+            <option value="Germany">Germany</option>
+            <option value="Netherlands">Netherlands</option>
+        </select>
+
+        <input type="submit" id="btn" pys-onClick="sub">
+
+
+    </form> 
+
+    <p>Output:</p>
+    <p id='output'></p>
+
+</main>
+
 </body>
+
+<footer>
+
+    <py-script src="webScraping.py">
+        card = cardDataMTG("Bladewing the Risen", "CMA", "175")
+    </py-script>
+
+    <py-script>
+        from js import document
+        from pyodide import create_proxy
+
+        def sub(*args, **kwargs):
+            global counter
+            global card
+            if (counter % 2) == 0:
+                pyscript.write("output", "Hello")
+            else:
+                pyscript.write("output", "Goodbye")
+            counter += 1
+    
+    </py-script>
+
+</footer>
+
 </html>
