@@ -1,190 +1,131 @@
-import webScraping
+import requests
+from bs4 import BeautifulSoup
+from lxml import etree
 
-def menu():
-    print("-----------     Menu Options     -----------\n")
-    print("             1) Import Card")
-    print("             2) Edit Card")
-    print("             3) Remove Card")
-    print("             4) Import Card CSV File")
-    print("             5) Open Collection GUI")
-    print("             6) Quit\n")
-    menuOption = input()
-    print()
+def searchFormat(arg):
+    puncList = ['`', '¬', '!', '"', '£', '$', '%', '^',' &', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', '\'', '@', '#', '~',
+            '\\', '|', ',', '<', '>', '.', '/', '?'] #list of punctuation, needs to be removed for the URL, but needs to be included in the name for the alt tag
 
-    return menuOption
-
-
-#checks user input from menu function to make sure it fits the format I need
-def menuFormat(menuOpt):
-    while True:
-        try:
-            intCheck = int(menuOpt) + 1
-            break
-        except:
-            menuOpt = input("Please enter an integer:\n")
-
-    while True:
-        if int(menuOpt) > 0 and int(menuOpt) < 5:
-            break
-        else:
-            menuOpt = input("Please enter a number in between the menu options:\n")
-
-    return menuOpt
-
-
-#splits words and capitilises them
-def capitaliseWords(funcInput):
-    temp = funcInput.lower().split(" ")
+    temp = arg.split(" ")
     numWords = len(temp)
     counter = 1
-    funcInput = ""
+    arg = ""
     for word in temp:
-        word = word.capitalize()
-        funcInput += word
+        temp = ''
+        for letter in word:
+            if letter not in puncList:
+                temp += letter
+        word = temp 
+        arg += word
         if counter != numWords:
-            funcInput += " "
+            arg += "-"
         counter += 1
 
-    return funcInput
+    return arg
 
 
-#menu option 1, imports singular card
-def importCard():
+def EUR2GBP(money):
+    result = ""
+    numList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-    acceptableTCG = ["MTG", "PTCG"]
-    acceptableMTGRarity = ["Common", "Uncommon", "Rare", "Mythic Rare"]
-    acceptablePKMNRarity = ["Common", "Uncommon", "Rare", "Promo"]
-    acceptableMTGFoilVariance = ["Non Foil", "Foil"]
-    acceptablePKMNFoilVariance = ["Non Foil", "Reverse Holo", "Holo"]
+    moneyRemoved = []
+    for char in money:
+        if char in numList:
+            moneyRemoved.append(char)
+    
+    temp1 = moneyRemoved[-2]
+    moneyRemoved.pop(-2)
+    temp2 = moneyRemoved[-1]
+    moneyRemoved.pop(-1)
+    
+    moneyRemoved.append('.')
+    moneyRemoved.append(temp1)
+    moneyRemoved.append(temp2)
+    
+    money= ""
+    for item in moneyRemoved:
+        money += item
+    
+    result = float(money) / 1.1655
+    result = round(result, 2)
+    
+    pennyCheck = str(result).split(".")
+    try:
+        while len(pennyCheck[1]) != 2:
+            pennyCheck[1] += '0'
+    except:
+        pennyCheck.append('00')
+    
+    result = ""
+    result += pennyCheck[0]
+    result += '.'
+    result += pennyCheck[1]
+    
+    output = str(result) + ' GBP'
 
-    #inputs card tcg, checks if in acceptable tcgs and sets to uppercase
-    tcgCheck = "n"
+    # result = result
+    return output
 
-    while tcgCheck.upper() == "N":
-        tcg = input("Enter the card's TCG:\n")
-        tcg = tcg.upper()
-        while tcg not in acceptableTCG:
-            tcg = input("Please enter an acceptable Trading Card Game (e.g. ptcg):\n")
-            tcg = tcg.upper()
+
+def cardDataMTG(set, setNum):
+    formatSet = searchFormat(set)
+    formatSetNum = searchFormat(setNum)
+
+    #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
+    URL = 'https://scryfall.com/card/' + formatSet + '/' + formatSetNum
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
+
+    page = requests.get(URL.lower(), headers=headers)
+
+    soup = BeautifulSoup(page.content, 'html.parser')
+    dom = etree.HTML(str(soup))
+
+    try:
+        imageElement = dom.xpath('/html/body/div[3]/div[1]/div/div[1]/div/img')[0].attrib.get('src')
         
-        tcgCheck = input("Is " + tcg + " the correct Trading Card Game, respond with Y/N:\n")
-        while tcgCheck.upper() not in ["Y", "N"]:
-            tcgCheck = input("Please enter an appropriate response:\n")
+        priceElement = dom.xpath('//*[@id="stores"]/ul/li[2]/a/span')[0].text
+        if priceElement != None:
+            price = priceElement.encode("ascii", "ignore")
+            price = price.decode()
+            price = EUR2GBP(price)
+        else:
+            price = "0.00 GBP"
+    except:
+        imageElement = "https://media.istockphoto.com/vectors/eye-sensitive-content-sign-nappropriate-content-censored-view-icon-vector-id1254025883?k=20&m=1254025883&s=170667a&w=0&h=LOGaQuBtSGyBlTLptw3P67pSZctopssc6cc5PQThBQE="
 
-    #inputs card name, uses capitilise function, and checks if name is correct
-    nameCheck = "n"
+        price = "0.00 GBP"
 
-    while nameCheck.upper() == "N":
-        name = input("Enter the card's name:\n")
-        name = capitaliseWords(name)
-
-        nameCheck = input("Is " + name + " the correct card name, respond with Y/N:\n")
-        while nameCheck.upper() not in ["Y", "N"]:
-            nameCheck = input("Please enter an appropriate response:\n")
-
-    #inputs rarity, chooses acceptable rarities based off of tcg
-    rarityCheck = "n"
-
-    while rarityCheck.upper() == "N":
-        rarity = input("Enter the card's rarity:\n")
-        rarity = capitaliseWords(rarity)
-
-        if tcg == "MTG":
-            while rarity not in acceptableMTGRarity:
-                rarity = input("Please enter a correct rarity for MTG:\n")
-                rarity = capitaliseWords(rarity)
-        elif tcg == "PTCG":
-            while rarity not in acceptablePKMNRarity:
-                rarity = input("Please enter a correct rarity for PTCG:\n")
-                rarity = capitaliseWords(rarity)
-
-        rarityCheck = input("Is " + rarity + " the correct rarity, respond with Y/N:\n")
-        while rarityCheck.upper() not in ["Y", "N"]:
-            rarityCheck = input("Please enter an appropriate response:\n")
-
-    #inputs card set, and chooses acceptable formatting based on tcg, checks with user if set is correct
-    setCheck = "n"
-
-    while setCheck.upper() == "N":
-        set = input("Enter the card's set:\n")
-
-        set = capitaliseWords(set)
-
-        setCheck = input("Is " + set + " the correct card set, respond with Y/N:\n")
-        while setCheck.upper() not in ["Y", "N"]:
-            setCheck = input("Please enter an appropriate response:\n")
-
-    #inputs card number, as pkmn tcg has multiple set number conventions, so it's unrealistic to format check them, but mtg is simpler in the format of 001
-    setNumCheck = "n"
-
-    while setNumCheck.upper() == "N":
-        setNum = input("Enter the card's set number:\n")
-
-        if tcg == "MTG":
-            while True:
-                try:
-                    a = int(setNum) + 0
-                    if int(setNum) > 0:
-                        break
-                    else:
-                        setNum = input("Please enter a number greater than 0:\n")
-                except:
-                    setNum = input("Please only enter full numbers:\n")
-
-            lenSetNum = len(setNum)
-            temp = ""
-            while lenSetNum < 3:
-                temp += "0"
-                lenSetNum += 1
-            
-            setNum = temp + setNum
-        
-        elif tcg == "PTCG":
-            setNum = setNum.upper()
-
-        setNumCheck = input("Is " + setNum + " the correct set number, respond with Y/N:\n")
-        while setNumCheck.upper() not in ["Y", "N"]:
-            setNumCheck = input("Please enter an appropriate response:\n")
-
-    #inputs foil variance, chooses acceptable rarities based off of tcg
-    foilCheck = "n"
-
-    while foilCheck.upper() == "N":
-        foil = input("Enter the card's foil variance:\n")
-        foil = capitaliseWords(foil)
-
-        if tcg == "MTG":
-            while foil not in acceptableMTGFoilVariance:
-                foil = input("Please enter a correct foil variance for MTG:\n" + str(acceptableMTGFoilVariance) + "\n")
-                foil = capitaliseWords(foil)
-        elif tcg == "PTCG":
-            while foil not in acceptablePKMNFoilVariance:
-                foil = input("Please enter a correct foil variance for PTCG:\n" + str(acceptablePKMNFoilVariance) + "\n")
-                foil = capitaliseWords(foil)
-
-        foilCheck = input("Is " + foil + " the correct foil variance, respond with Y/N:\n")
-        while foilCheck.upper() not in ["Y", "N"]:
-            foilCheck = input("Please enter an appropriate response:\n")
-
-    #uses webScraping module to retrieve card image
-    webScrapeCheck = "n"
-
-    while webScrapeCheck.upper() == "N":
-        webData = 0
-        if tcg == "MTG":
-            webData = webScraping.cardImageMTG(name, set, setNum)
-        
-        # elif tcg == "PTCG":
-        #     image = webScraping.cardImagePTCG(name, set)
-
-        webScrapeCheck = input("Does the following information match your card, respond with Y/N:\n" + webData + "\n")
-        while webScrapeCheck.upper() not in ["Y", "N"]:
-            webScrapeCheck = input("Please enter an appropriate response:\n")
-
-    returnList = [tcg, name, rarity, set, setNum, foil, webData]
+    nameElement = dom.xpath('/html/body/div[3]/div[1]/div/div[3]/h1/span[1]')[0].text
+    
+    rarityElement = dom.xpath('/html/body/div[3]/div[1]/div/div[4]/div[1]/a/span[2]')[0].text
+    rarity = rarityElement.split("·")
+    
+    returnList = [nameElement, rarity[1], formatSet, formatSetNum, imageElement, price]
+    
     return returnList
 
 
-#menuOption = menu()
-#menuOption = menuFormat(menuOption)
-importCard()
+# def cardImagePTCG(name, set):
+#     formatName = searchFormat(name)
+#     formatSet = searchFormat(set)
+
+#     #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
+#     URL = 'https://www.tcgplayer.com/search/pokemon/' + formatSet
+
+#     headers = {
+#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+#     }
+
+#     page = requests.get(URL, headers=headers)
+
+#     soup = BeautifulSoup(page.content, 'html.parser')
+
+#     #imageElement finds image element
+#     #image finds the src of the image
+#     imageElement = soup.find('span', name)
+#     image = imageElement['src']
+    
+#     return image
