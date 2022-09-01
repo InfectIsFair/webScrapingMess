@@ -46,7 +46,7 @@ def EUR2GBP(money):
     for item in moneyRemoved:
         money += item
     
-    result = float(money) * 0.84
+    result = float(money) / 1.1655
     result = round(result, 2)
     
     pennyCheck = str(result).split(".")
@@ -67,52 +67,83 @@ def EUR2GBP(money):
     return output
 
 
-def cardDataMTG(name, set, setNum):
-    formatName = searchFormat(name)
+def cardDataMTG(set, setNum):
     formatSet = searchFormat(set)
     formatSetNum = searchFormat(setNum)
 
     #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
-    URL = 'https://scryfall.com/card/' + formatSet + '/' + formatSetNum + '/' + formatName
+    URL = 'https://scryfall.com/card/' + formatSet + '/' + formatSetNum
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
     }
 
-    page = requests.get(URL, headers=headers)
+    page = requests.get(URL.lower(), headers=headers)
 
     soup = BeautifulSoup(page.content, 'html.parser')
     dom = etree.HTML(str(soup))
 
-    imageElement = dom.xpath('//*[@id="main"]/div[1]/div/div[1]/div/img')[0].attrib.get('src')
-    priceElement = dom.xpath('//*[@id="stores"]/ul/li[2]/a/span')[0].text
-    price = priceElement.encode("ascii", "ignore")
-    price = price.decode()
-    price = EUR2GBP(price)
+    try:
+        imageElement = dom.xpath('/html/body/div[3]/div[1]/div/div[1]/div/img')[0].attrib.get('src')
+        
+        priceElement = dom.xpath('//*[@id="stores"]/ul/li[2]/a/span')[0].text
+        if priceElement != None:
+            price = priceElement.encode("ascii", "ignore")
+            price = price.decode()
+            price = EUR2GBP(price)
+        else:
+            price = "0.00 GBP"
+    except:
+        imageElement = "https://media.istockphoto.com/vectors/eye-sensitive-content-sign-nappropriate-content-censored-view-icon-vector-id1254025883?k=20&m=1254025883&s=170667a&w=0&h=LOGaQuBtSGyBlTLptw3P67pSZctopssc6cc5PQThBQE="
+
+        price = "0.00 GBP"
+
+    nameElement = dom.xpath('/html/body/div[3]/div[1]/div/div[3]/h1/span[1]')[0].text
     
-    returnList = [imageElement, price]
+    rarityElement = dom.xpath('/html/body/div[3]/div[1]/div/div[4]/div[1]/a/span[2]')[0].text
+    rarity = rarityElement.split("·")
+    
+    returnList = [nameElement, rarity[1], formatSet, formatSetNum, imageElement, price]
     
     return returnList
 
 
-# def cardImagePTCG(name, set):
-#     formatName = searchFormat(name)
-#     formatSet = searchFormat(set)
+def cardDataPTCG(set, setNum):
+    formatSet = searchFormat(set)
+    formatSetNum = searchFormat(setNum)
 
-#     #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
-#     URL = 'https://www.tcgplayer.com/search/pokemon/' + formatSet
+    #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
+    URL = 'https://limitlesstcg.com/cards/' + formatSet + '/' + formatSetNum
 
-#     headers = {
-#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-#     }
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
 
-#     page = requests.get(URL, headers=headers)
+    page = requests.get(URL.lower(), headers=headers)
 
-#     soup = BeautifulSoup(page.content, 'html.parser')
+    soup = BeautifulSoup(page.content, 'html.parser')
+    dom = etree.HTML(str(soup))
 
-#     #imageElement finds image element
-#     #image finds the src of the image
-#     imageElement = soup.find('span', name)
-#     image = imageElement['src']
+    try:
+        imageElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[1]/img')[0].attrib.get('src')
+        
+        priceElement = dom.xpath('/html/body/main/div/section[2]/div[2]/a[2]/span')[0].text
+        if priceElement != None:
+            price = priceElement.encode("ascii", "ignore")
+            price = price.decode()
+            price = EUR2GBP(price)
+        else:
+            price = "0.00 GBP"
+    except:
+        imageElement = "https://media.istockphoto.com/vectors/eye-sensitive-content-sign-nappropriate-content-censored-view-icon-vector-id1254025883?k=20&m=1254025883&s=170667a&w=0&h=LOGaQuBtSGyBlTLptw3P67pSZctopssc6cc5PQThBQE="
+
+        price = "0.00 GBP"
+
+    nameElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/span/a')[0].text
     
-#     return image
+    rarityElement = dom.xpath('/html/body/main/div/section[1]/div[2]/div/a/div/span[2]')[0].text
+    rarity = rarityElement.split("·")
+    
+    returnList = [nameElement, rarity[1], formatSet, formatSetNum, imageElement, price]
+    
+    return returnList
