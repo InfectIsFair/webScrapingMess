@@ -24,6 +24,19 @@ def searchFormat(arg):
     return arg
 
 
+def removePunc(arg):
+    puncList = ['`', '¬', '!', '"', '£', '$', '%', '^',' &', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', '\'', '@', '#', '~',
+            '\\', '|', ',', '<', '>', '.', '/', '?'] #list of punctuation, needs to be removed for the URL, but needs to be included in the name for the alt tag
+
+    temp = arg
+    arg = ""
+    for letter in temp:
+        if letter not in puncList:
+            arg += letter
+
+    return arg
+
+
 def EUR2GBP(money):
     result = ""
     numList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -84,9 +97,9 @@ def cardDataMTG(set, setNum):
     dom = etree.HTML(str(soup))
 
     try:
-        imageElement = dom.xpath('/html/body/div[3]/div[1]/div/div[1]/div/img')[0].attrib.get('src')
-        
+        imageElement = dom.xpath('//*[@id="main"]/div[1]/div/div[1]/div/img')[0].attrib.get('src')
         priceElement = dom.xpath('//*[@id="stores"]/ul/li[2]/a/span')[0].text
+
         if priceElement != None:
             price = priceElement.encode("ascii", "ignore")
             price = price.decode()
@@ -98,9 +111,9 @@ def cardDataMTG(set, setNum):
 
         price = "0.00 GBP"
 
-    nameElement = dom.xpath('/html/body/div[3]/div[1]/div/div[3]/h1/span[1]')[0].text
+    nameElement = dom.xpath('//*[@id="main"]/div[1]/div/div[3]/h1/span[1]')[0].text
     
-    rarityElement = dom.xpath('/html/body/div[3]/div[1]/div/div[4]/div[1]/a/span[2]')[0].text
+    rarityElement = dom.xpath('//*[@id="main"]/div[1]/div/div[4]/div[1]/a/span[2]')[0].text
     rarity = rarityElement.split("·")
     
     returnList = [nameElement, rarity[1], formatSet, formatSetNum, imageElement, price]
@@ -126,8 +139,8 @@ def cardDataPTCG(set, setNum):
 
     try:
         imageElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[1]/img')[0].attrib.get('src')
-        
         priceElement = dom.xpath('/html/body/main/div/section[2]/div[2]/a[2]/span')[0].text
+        
         if priceElement != None:
             price = priceElement.encode("ascii", "ignore")
             price = price.decode()
@@ -139,11 +152,26 @@ def cardDataPTCG(set, setNum):
 
         price = "0.00 GBP"
 
+    #error here
+    #error here
+    #error here
+    #error here
+    #error here
     nameElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/span/a')[0].text
+    name = removePunc(nameElement)
+    if isinstance(name, unicode):
+        name = list(name)
+        print(name)
+        name = str(name)
+    #error here
+    #error here
+    #error here
+    #error here
+    #error here
     
     rarityElement = dom.xpath('/html/body/main/div/section[1]/div[2]/div/a/div/span[2]')[0].text
     rarity = rarityElement.split("·")
     
-    returnList = [nameElement, rarity[1], formatSet, formatSetNum, imageElement, price]
+    returnList = [name, rarity[1], formatSet, formatSetNum, imageElement, price]
     
     return returnList
