@@ -1,0 +1,149 @@
+:root {
+  --primary-color: #b1ceff;
+  --secondary-color: #000000;
+}
+
+html {
+  background-color: var(--secondary-color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.top--100 {
+  margin-top: 100px;
+}
+
+.bottom--50 {
+  margin-bottom: 50px;
+}
+
+.bottom--120 {
+  margin-bottom: 120px;
+}
+
+.bottom--140 {
+  margin-bottom: 140px;
+}
+
+.bottom--150 {
+  margin-bottom: 150px;
+}
+
+.right--30 {
+  margin-right: 30px;
+}
+
+nav {
+  background-color: var(--secondary-color);
+}
+
+nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  list-style: none;
+  color: white;
+}
+
+nav ul a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul li {
+  font-size: 1.5rem;
+  padding: 20px 35px;
+}
+
+nav ul div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: var(--primary-color);
+}
+
+.main-text {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+section {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+section ul {
+  padding: 0 67px;
+}
+
+.display-hand img {
+  position: relative;
+  height: 330px;
+  width: auto;
+  margin-right: -70px;
+}
+
+.display-hand img:hover {
+  z-index: 5;
+  cursor: pointer;
+  bottom: 50px;
+}
+
+footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: var(--secondary-color);
+  color: black;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  padding: 20px 35px;
+}
+
+footer div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+/*# sourceMappingURL=styles.css.map */

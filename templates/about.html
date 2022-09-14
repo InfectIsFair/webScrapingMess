@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>TCG Master Base</title>
+</head>
+
+<body>
+    <main>
+        <section class="top">
+            <div>
+                <img src="https://www.chichester.ac.uk/images/default-source/sliders/about-principalswelcome-hero_0.tmb-homeslide.jpg?sfvrsn=2ec7478d_2" alt="">
+                <img src="" alt="">
+            </div>
+            <p></p>
+        </section>
+        <section class="bottom">
+            <p></p>
+            <img src="" alt="">
+        </section>
+    </main>
+</body>
+
+<footer>
+    <div>
+        <a href="#">About Me</a>
+        <a href="#">Contact Me</a>
+    </div>
+    <a href="#" class="right--30">Legal Stuff</a>
+
+    <script>
+        function randomHand() {
+            let text = "display-hand-";
+            let num = 0;
+            let x;
+            let i = 0;
+            cards = {{ cards | tojson }};
+            let randomCards = [];
+            let randomLength = randomCards.length;
+            while (randomLength < 7) {
+                cardLength = cards.length;
+                x = Math.floor(Math.random() * cardLength);
+                num = i + 1;
+                num = num.toString();
+                id = text.concat(num);
+                if (!(randomCards.includes(cards[x][5]))) {
+                    document.getElementById(id).src = cards[x][5];
+                    i = i + 1;
+                    randomCards.push(cards[x][5]);
+                }
+                randomLength = randomCards.length;
+            }
+        }
+        randomHand();
+    </script>
+
+</footer>
+</html>
