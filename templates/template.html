@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>TCG Master Base{% block title %}{% endblock %}</title>
+</head>
+
+<header>
+    <nav>
+        <ul>
+            <div class="nav-bar">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Database</a></li>
+                <li><a href="#">My Cards</a></li>
+                <li><a href="#">Forum</a></li>
+            </div>
+            <li class="right--30"><a href="#">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<body>
+    {% block main %}{% endblock %}
+</body>
+
+
+<footer>
+    <div>
+        <a href="/about/">About Me</a>
+        <a href="#">Contact Me</a>
+    </div>
+    <a href="#" class="right--30">Legal Stuff</a>
+
+    <script>
+        function burgerMenu() {
+            var x = document.getElementById("reactive-nav-bar");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        } 
+    </script>
+
+    {% block footer %}{% endblock %}
+
+</footer>
+</html>

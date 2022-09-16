@@ -1,75 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-    <title>TCG Master Base</title>
-</head>
+{% extends 'template.html' %}
 
-<header>
-    <nav>
-        <ul>
-            <div>
-                <li><a href="#">Database</a></li>
-                <li><a href="#">My Cards</a></li>
-                <li><a href="#">Forum</a></li>
-            </div>
-            <li class="right--30"><a href="#">Log In</a></li>
+{% block title %} - Home{% endblock %}
+
+{% block main %}
+<main class="main">
+    <section class="wrapper">
+        <p class="home-main-text bottom--120 top--100">Welcome to the TCG Master Base! This website is early in development, but big in aspirations. I'm hoping to make this website the main way people organise their card collections across all TCGs. And I can't do that without your help. If you have any suggestions, or TCGs you want added, discuss it in the <a href="#">Forum</a>. If you have a more pressing issue such as a fault with the site, use the <a href="#">Contact</a> section.</p>
+        <ul class="display-hand bottom--50">
+            <img id="display-hand-1" src=""></img>
+            <img id="display-hand-2" src=""></img>
+            <img id="display-hand-3" src=""></img>
+            <img id="display-hand-4" src=""></img>
+            <img id="display-hand-5" src=""></img>
+            <img id="display-hand-6" src=""></img>
+            <img id="display-hand-7" src=""></img>
         </ul>
-    </nav>
-</header>
+    </section>
+</main>
+{% endblock %}
 
-<body>
-    <main>
-        <section>
-            <p class="main-text bottom--120 top--100">Welcome to the TCG Master Base! This website is early in development, but big in aspirations. I'm hoping to make this website the main way people organise their card collections across all TCGs. And I can't do that without your help. If you have any suggestions, or TCGs you want added, talk to me through the Forum. If you have a more pressing issue, use the Contact section.</p>
-            <ul class="display-hand bottom--50">
-                <img id="display-hand-1" src=""></img>
-                <img id="display-hand-2" src=""></img>
-                <img id="display-hand-3" src=""></img>
-                <img id="display-hand-4" src=""></img>
-                <img id="display-hand-5" src=""></img>
-                <img id="display-hand-6" src=""></img>
-                <img id="display-hand-7" src=""></img>
-            </ul>
-        </section>
-    </main>
-</body>
-
-<footer>
-    <div>
-        <a href="#">About Me</a>
-        <a href="#">Contact Me</a>
-    </div>
-    <a href="#" class="right--30">Legal Stuff</a>
-
-    <script>
-        function randomHand() {
-            let text = "display-hand-";
-            let num = 0;
-            let x;
-            let i = 0;
-            cards = {{ cards | tojson }};
-            let randomCards = [];
-            let randomLength = randomCards.length;
-            while (randomLength < 7) {
-                cardLength = cards.length;
-                x = Math.floor(Math.random() * cardLength);
-                num = i + 1;
-                num = num.toString();
-                id = text.concat(num);
-                if (!(randomCards.includes(cards[x][5]))) {
-                    document.getElementById(id).src = cards[x][5];
-                    i = i + 1;
-                    randomCards.push(cards[x][5]);
-                }
-                randomLength = randomCards.length;
+{% block footer %}
+<script>
+    function randomHand() {
+        let text = "display-hand-";
+        let num = 0;
+        let x;
+        let i = 0;
+        cards = {{ cards | tojson }};
+        let randomCards = [];
+        let randomLength = randomCards.length;
+        while (randomLength < 7) {
+            cardLength = cards.length;
+            x = Math.floor(Math.random() * cardLength);
+            num = i + 1;
+            num = num.toString();
+            id = text.concat(num);
+            if (!(randomCards.includes(cards[x][5]))) {
+                document.getElementById(id).src = cards[x][5];
+                i = i + 1;
+                randomCards.push(cards[x][5]);
             }
+            randomLength = randomCards.length;
         }
-        randomHand();
-    </script>
-
-</footer>
-</html>
+    }
+    randomHand();
+</script>
+{% endblock %}

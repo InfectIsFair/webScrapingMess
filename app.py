@@ -170,5 +170,9 @@ cardsLength = len(cards)
 def index():
     return render_template("index.html", cards=cards)
 
+@app.route('/about/')
+def about():
+    return render_template("about.html", cards=cards)
+
 if __name__ == "__main__":
     app.run(debug=True)
