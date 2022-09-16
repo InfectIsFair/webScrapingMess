@@ -24,6 +24,10 @@ def index():
 def about():
     return render_template("about.html", cards=cards)
 
+@app.route('/contact-me/')
+def contact():
+    return render_template("contact.html", cards=cards)
+
 # for card in cards:
 #     if card[1] == "MTG":
 #         @app.route("/mtg-cards/")
