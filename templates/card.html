@@ -1,0 +1,21 @@
+{% extends 'template.html' %}
+
+{% block title %} - View Card{% endblock %}
+
+
+{% block main %}
+<main>
+    <section class="wrapper">
+        <h1>{{ value[2] }}</h1>
+        <p>{{ value[3] }}</p>
+        <p>{{ value[4] }}</p>
+        <p>{{ value[5] }}</p>
+        <img src="{{ value[6] }}" alt="">
+        <p>{{ value[7] }}</p>
+    </section>
+</main>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

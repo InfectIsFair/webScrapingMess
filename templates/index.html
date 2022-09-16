@@ -3,17 +3,17 @@
 {% block title %} - Home{% endblock %}
 
 {% block main %}
-<main class="main">
+<main>
     <section class="wrapper">
         <p class="home-main-text bottom--120 top--100">Welcome to the TCG Master Base! This website is early in development, but big in aspirations. I'm hoping to make this website the main way people organise their card collections across all TCGs. And I can't do that without your help. If you have any suggestions, or TCGs you want added, discuss it in the <a href="#">Forum</a>. If you have a more pressing issue such as a fault with the site, use the <a href="#">Contact</a> section.</p>
         <ul class="display-hand bottom--50">
-            <img id="display-hand-1" src=""></img>
-            <img id="display-hand-2" src=""></img>
-            <img id="display-hand-3" src=""></img>
-            <img id="display-hand-4" src=""></img>
-            <img id="display-hand-5" src=""></img>
-            <img id="display-hand-6" src=""></img>
-            <img id="display-hand-7" src=""></img>
+            <a href="#" target="_blank"><img id="display-hand-1" src=""></img></a>
+            <a href="#" target="_blank"><img id="display-hand-2" src=""></img></a>
+            <a href="#" target="_blank"><img id="display-hand-3" src=""></img></a>
+            <a href="#" target="_blank"><img id="display-hand-4" src=""></img></a>
+            <a href="#" target="_blank"><img id="display-hand-5" src=""></img></a>
+            <a href="#" target="_blank"><img id="display-hand-6" src=""></img></a>
+            <a href="#" target="_blank"><img id="display-hand-7" src=""></img></a>
         </ul>
     </section>
 </main>
@@ -35,10 +35,10 @@
             num = i + 1;
             num = num.toString();
             id = text.concat(num);
-            if (!(randomCards.includes(cards[x][5]))) {
-                document.getElementById(id).src = cards[x][5];
+            if (!(randomCards.includes(cards[x][0]))) {
+                document.getElementById(id).src = cards[x][6];
                 i = i + 1;
-                randomCards.push(cards[x][5]);
+                randomCards.push(cards[x][0]);
             }
             randomLength = randomCards.length;
         }

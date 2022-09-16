@@ -7,7 +7,8 @@ def ptcgSet2CSV(set, maxNum):
 
         librarian = open('card-library.csv', 'a')
 
-        librarian.write("PTCG, ")
+        temp = turing[0]
+        turing[0] = main.removePunc(temp)
 
         count = len(turing)
         for item in turing:
@@ -25,4 +26,5 @@ def ptcgSet2CSV(set, maxNum):
         print(num + 1)
 
 
-ptcgSet2CSV('STS', 116)
+ptcgSet2CSV("STS", 116)
+ptcgSet2CSV("EVO", 113)

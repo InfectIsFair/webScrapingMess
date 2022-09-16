@@ -7,8 +7,6 @@ def mtgSet2CSV(set, maxNum):
 
         librarian = open('card-library.csv', 'a')
 
-        librarian.write("MTG, ")
-
         temp = turing[0]
         turing[0] = main.removePunc(temp)
 
@@ -28,4 +26,4 @@ def mtgSet2CSV(set, maxNum):
         print(num + 1)
 
 
-mtgSet2CSV('NEO', 512)
+mtgSet2CSV("XLN", 289)

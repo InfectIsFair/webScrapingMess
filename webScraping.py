@@ -4,7 +4,7 @@ from lxml import etree
 
 def searchFormat(arg):
     puncList = ['`', '¬', '!', '"', '£', '$', '%', '^',' &', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', '\'', '@', '#', '~',
-            '\\', '|', ',', '<', '>', '.', '/', '?'] #list of punctuation, needs to be removed for the URL, but needs to be included in the name for the alt tag
+            '|', ',', '<', '>', '.', '/', '?'] #list of punctuation, needs to be removed for the URL, but needs to be included in the name for the alt tag
 
     temp = arg.split(" ")
     numWords = len(temp)
@@ -26,7 +26,7 @@ def searchFormat(arg):
 
 def removePunc(arg):
     puncList = ['`', '¬', '!', '"', '£', '$', '%', '^',' &', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', '\'', '@', '#', '~',
-            '\\', '|', ',', '<', '>', '.', '/', '?'] #list of punctuation, needs to be removed for the URL, but needs to be included in the name for the alt tag
+            '|', ',', '<', '>', '.', '/', '?'] #list of punctuation, needs to be removed for the URL, but needs to be included in the name for the alt tag
 
     temp = arg
     arg = ""
@@ -81,6 +81,9 @@ def EUR2GBP(money):
 
 
 def cardDataMTG(set, setNum):
+    cardId = 'M' + set.lower() + str(setNum)
+    TCG = 'MTG'
+
     formatSet = searchFormat(set)
     formatSetNum = searchFormat(setNum)
 
@@ -112,16 +115,20 @@ def cardDataMTG(set, setNum):
         price = "0.00 GBP"
 
     nameElement = dom.xpath('//*[@id="main"]/div[1]/div/div[3]/h1/span[1]')[0].text
+    name = removePunc(nameElement)
     
     rarityElement = dom.xpath('//*[@id="main"]/div[1]/div/div[4]/div[1]/a/span[2]')[0].text
     rarity = rarityElement.split("·")
     
-    returnList = [nameElement, rarity[1], formatSet, formatSetNum, imageElement, price]
+    returnList = [cardId, TCG, name, rarity[1], formatSet, formatSetNum, imageElement, price]
     
     return returnList
 
 
 def cardDataPTCG(set, setNum):
+    cardId = 'P' + set.lower() + str(setNum)
+    TCG = "PTCG"
+
     formatSet = searchFormat(set)
     formatSetNum = searchFormat(setNum)
 
@@ -152,26 +159,15 @@ def cardDataPTCG(set, setNum):
 
         price = "0.00 GBP"
 
-    #error here
-    #error here
-    #error here
-    #error here
-    #error here
     nameElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/span/a')[0].text
     name = removePunc(nameElement)
-    if isinstance(name, unicode):
-        name = list(name)
-        print(name)
-        name = str(name)
-    #error here
-    #error here
-    #error here
-    #error here
-    #error here
+    nameEncode = name.encode("ascii", 'ignore')
+    nameDecode = nameEncode.decode()
+    name = nameDecode
     
     rarityElement = dom.xpath('/html/body/main/div/section[1]/div[2]/div/a/div/span[2]')[0].text
     rarity = rarityElement.split("·")
     
-    returnList = [name, rarity[1], formatSet, formatSetNum, imageElement, price]
+    returnList = [cardId, TCG, name, rarity[1], formatSet, formatSetNum, imageElement, price]
     
     return returnList
