@@ -5,15 +5,15 @@
 {% block main %}
 <main>
     <section class="wrapper">
-        <p class="home-main-text bottom--120 top--100">Welcome to the TCG Master Base! This website is early in development, but big in aspirations. I'm hoping to make this website the main way people organise their card collections across all TCGs. And I can't do that without your help. If you have any suggestions, or TCGs you want added, discuss it in the <a href="#">Forum</a>. If you have a more pressing issue such as a fault with the site, use the <a href="#">Contact</a> section.</p>
+        <p class="home-main-text bottom--120 top--100">Welcome to the TCG Master Base! This website is early in development, but big in aspirations. I'm hoping to make this website the main way people organise their card collections across all TCGs. And I can't do that without your help. If you have any suggestions, or TCGs you want added, or even a more pressing issue such as a fault with the site, use the <a href="#">Contact</a> section. However, if you just want to chat with other users you could post on the <a href="#">Forums</a> instead.</p>
         <ul class="display-hand bottom--50">
-            <a href="#" target="_blank"><img id="display-hand-1" src=""></img></a>
-            <a href="#" target="_blank"><img id="display-hand-2" src=""></img></a>
-            <a href="#" target="_blank"><img id="display-hand-3" src=""></img></a>
-            <a href="#" target="_blank"><img id="display-hand-4" src=""></img></a>
-            <a href="#" target="_blank"><img id="display-hand-5" src=""></img></a>
-            <a href="#" target="_blank"><img id="display-hand-6" src=""></img></a>
-            <a href="#" target="_blank"><img id="display-hand-7" src=""></img></a>
+            <a href="#" id="display-link-1" target="_blank"><img id="display-hand-1" src=""></img></a>
+            <a href="#" id="display-link-2" target="_blank"><img id="display-hand-2" src=""></img></a>
+            <a href="#" id="display-link-3" target="_blank"><img id="display-hand-3" src=""></img></a>
+            <a href="#" id="display-link-4" target="_blank"><img id="display-hand-4" src=""></img></a>
+            <a href="#" id="display-link-5" target="_blank"><img id="display-hand-5" src=""></img></a>
+            <a href="#" id="display-link-6" target="_blank"><img id="display-hand-6" src=""></img></a>
+            <a href="#" id="display-link-7" target="_blank"><img id="display-hand-7" src=""></img></a>
         </ul>
     </section>
 </main>
@@ -23,8 +23,11 @@
 <script>
     function randomHand() {
         let text = "display-hand-";
+        let url = "display-link-";
+        let dns = "/card-database/"
         let num = 0;
         let x;
+        let y;
         let i = 0;
         cards = {{ cards | tojson }};
         let randomCards = [];
@@ -34,9 +37,13 @@
             x = Math.floor(Math.random() * cardLength);
             num = i + 1;
             num = num.toString();
-            id = text.concat(num);
+            imgId = text.concat(num);
+            linkId = url.concat(num);
             if (!(randomCards.includes(cards[x][0]))) {
-                document.getElementById(id).src = cards[x][6];
+                document.getElementById(imgId).src = cards[x][6];
+                let temp = dns.concat(cards[x][0]);
+                y = temp.concat("/")
+                document.getElementById(linkId).href = y;
                 i = i + 1;
                 randomCards.push(cards[x][0]);
             }

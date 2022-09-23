@@ -2,6 +2,8 @@
   --primary-color: #b1ceff;
   --secondary-color: #729ce6;
   --font-color: black;
+  --discord-color: #5865f2;
+  --reddit-color: #ff4500;
 }
 
 html {
@@ -61,10 +63,37 @@ main {
 .wrapper {
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .wrapper ul {
   padding: 0 67px;
+}
+
+.wrapper--flex-mid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.wrapper--no-wrapper {
+  max-width: none;
+}
+
+.wrapper--space-between {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wrapper__contact {
+  padding: 0 50px;
 }
 
 nav {
@@ -107,12 +136,6 @@ nav ul div {
 }
 
 footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   background-color: var(--secondary-color);
   color: var(--font-color);
 }
@@ -132,6 +155,20 @@ footer div {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.footer-legals {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
 }
 
 .home-main-text {
@@ -242,5 +279,233 @@ footer div {
   .about-images--disappear {
     display: none;
   }
+}
+
+#contact-form {
+  width: 100%;
+  margin: 50px 0;
+}
+
+#contact-form label {
+  margin-bottom: 5px;
+  font-size: 21px;
+}
+
+#contact-form input[type=text], #contact-form input[type=tel], #contact-form input[type=email] {
+  height: 34px;
+  padding: 6px;
+  margin-bottom: 25px;
+  font-size: 18px;
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+#contact-form textarea {
+  height: 503px;
+  padding: 6px;
+  margin-bottom: 25px;
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  resize: none;
+}
+
+.contact-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.contact-section > * {
+  width: 45%;
+}
+
+.contact-socials {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.social-media {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 80%;
+  padding: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.social-media img {
+  height: 200px;
+  width: 200px;
+}
+
+.social-media--discord {
+  color: white;
+  margin-bottom: 25px;
+  background-color: var(--discord-color);
+}
+
+.social-media--reddit {
+  color: black;
+  background-color: var(--reddit-color);
+}
+
+.contact-submit {
+  width: 60%;
+  height: 50px;
+  font-size: 18px;
+  background-color: white;
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+@media (max-width: 1450px) {
+  .contact-section {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .contact-section > * {
+    width: 90%;
+  }
+  .contact-socials {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .social-media {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+  .social-media img {
+    height: 100px;
+    width: 100px;
+  }
+  .social-media--reddit {
+    margin-left: 50px;
+    margin-bottom: 25px;
+  }
+  .contact-submit {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+  }
+}
+
+@media (max-width: 430px) {
+  .footer-legals {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .footer-legals a {
+    margin: 0 !important;
+  }
+  .footer-legals div {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .contact-socials {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .social-media--reddit {
+    margin-left: 0;
+  }
+}
+
+.card-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 50px;
+}
+
+.card-details-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.card-col-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.card-col-div > * {
+  border: 1px solid black;
+}
+
+.card-img {
+  height: 650px;
 }
 /*# sourceMappingURL=styles.css.map */

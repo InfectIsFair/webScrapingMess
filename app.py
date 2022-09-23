@@ -1,12 +1,19 @@
 from flask import Flask, render_template
 
 def importCSV():
-    count = -1
     returnList = []
     librarian = open('card-library.csv', 'r')
     for line in librarian.readlines():
         returnList.append(line.split(','))
-        count += 1
+
+    return returnList
+
+
+def importSetCSV():
+    returnList = []
+    librarian = open("mtg-set.csv", "r")
+    for line in librarian.readlines():
+        returnList.append(line.split("/"))
 
     return returnList
 
@@ -28,16 +35,11 @@ def about():
 def contact():
     return render_template("contact.html", cards=cards)
 
-# for card in cards:
-#     if card[1] == "MTG":
-#         @app.route("/mtg-cards/")
-#         def mtgCard():
-#             return render_template("card.html", value=card)
-#     elif card[1] == "PTCG":
-#         dnsExtension = '/ptcg-cards/' + card[0]
-#         @app.route(dnsExtension)
-#         def ptcgCard():
-#             return render_template("cards.html", value=card)
+@app.route('/card-database/<card_id>/')
+def singleCards(card_id):
+    for card in cards:
+        if card[0] == card_id:
+            return render_template("card.html", value=card, setCSV=importSetCSV(), cards=cards)
 
 if __name__ == "__main__":
     app.run(debug=True)

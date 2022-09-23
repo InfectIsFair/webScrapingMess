@@ -3,6 +3,8 @@
     --primary-color: #b1ceff;
     --secondary-color: #729ce6;
     --font-color: black;
+    --discord-color: #5865f2;
+    --reddit-color: #ff4500;
     // --secondary-color: #000000;
 }
 
@@ -57,8 +59,23 @@ main {
 .wrapper {
     max-width: 1400px;
     margin: 0 auto;
+    width: 100%;
     ul {
         padding: 0 67px;
+    }
+    &--flex-mid {
+        display: flex;
+        justify-content: center;
+    }
+    &--no-wrapper {
+        max-width: none;
+    }
+    &--space-between {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__contact {
+        padding: 0 50px;
     }
 }
 
@@ -88,8 +105,6 @@ nav {
 
 // footer
 footer {
-    display: flex;
-    justify-content: space-between;
     background-color: var(--secondary-color);
     color: var(--font-color);
     a {
@@ -102,6 +117,13 @@ footer {
         display: flex;
         flex-direction: column;
     }
+}
+
+.footer-legals {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
 
 // index main
@@ -185,4 +207,171 @@ footer {
     .about-images--disappear {
         display: none;
     }
+}
+
+// contact me
+#contact-form {
+    width: 100%;
+    margin: 50px 0;
+    label {
+        margin-bottom: 5px;
+        font-size: 21px;
+    }
+    input[type=text], input[type=tel], input[type=email] {
+        height: 34px;
+        padding: 6px;
+        margin-bottom: 25px;
+        font-size: 18px;
+        border: solid black;
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -ms-border-radius: 15px;
+        -o-border-radius: 15px;
+}
+    textarea {
+        height: 503px;
+        padding: 6px;
+        margin-bottom: 25px;
+        border: solid black;
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -ms-border-radius: 15px;
+        -o-border-radius: 15px;
+        resize: none;
+    }
+}
+
+.contact-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    > * {
+        width: 45%;
+    }
+}
+
+.contact-socials {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-media {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    border: solid black;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    img {
+        height: 200px;
+        width: 200px;
+    }
+    &--discord {
+        color: white;
+        margin-bottom: 25px;
+        background-color: var(--discord-color);
+    }
+    &--reddit {
+        color: black;
+        background-color: var(--reddit-color);
+    }
+}
+
+.contact-submit {
+    width: 60%;
+    height: 50px;
+    font-size: 18px;
+    background-color: white;
+    border: solid black;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+@media (max-width: 1450px) {
+    .contact-section {
+        flex-direction: column;
+        > * {
+            width: 90%;
+        }
+    }
+    .contact-socials {
+        flex-direction: row;
+    }
+    .social-media {
+        width: fit-content;
+        img {
+            height: 100px;
+            width: 100px;
+        }
+    }
+    .social-media--reddit {
+        margin-left: 50px;
+        margin-bottom: 25px;
+    }
+    .contact-submit {
+        align-self: center;
+    }
+}
+
+@media (max-width: 430px) {
+    .footer-legals {
+        flex-direction: column;
+        align-items: center;
+        a {
+            margin: 0 !important;
+        }
+        div {
+            align-items: center;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .contact-socials {
+        flex-direction: column;
+    }
+    .social-media--reddit {
+        margin-left: 0;
+    }
+}
+
+// card
+
+.card-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 50px;
+}
+
+.card-details-div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-col-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    > * {
+        border: 1px solid black;
+    }
+}
+
+.card-img {
+    height:650px;
 }
