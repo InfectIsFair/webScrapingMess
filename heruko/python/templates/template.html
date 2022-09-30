@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>TCG Master Base{% block title %}{% endblock %}</title>
+</head>
+
+<header>
+    <section class="wrapper wrapper--no-wrapper">
+        <nav>
+            <ul>
+                <div class="nav-bar">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#">Database</a></li>
+                    <li><a href="#">My Cards</a></li>
+                    <li><a href="#">Forum</a></li>
+                </div>
+                <li class="right--30"><a href="#">Log In</a></li>
+            </ul>
+        </nav>
+    </section>
+</header>
+
+<body>
+    {% block main %}{% endblock %}
+</body>
+
+
+<footer>
+    <section class="wrapper wrapper--space-between">
+        <div class="footer-legals">
+            <div>
+                <a href="/about/">About Me</a>
+                <a href="/contact-me/">Contact Me</a>
+            </div>
+            <a href="#" class="right--30">Legal Stuff</a>
+        </div>
+    </section>
+
+    <script>
+        function burgerMenu() {
+            const x = document.getElementById("burger-items");
+            if (x.style.display === "flex") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "flex";
+            }
+        } 
+    </script>
+
+    {% block footer %}{% endblock %}
+
+</footer>
+</html>
