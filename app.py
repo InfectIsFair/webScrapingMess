@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-import orderSetByDate
 
 def importCSV():
     returnList = []
@@ -40,7 +39,7 @@ def contact():
 def singleCards(magic_card_id):
     for card in cards:
         if card[0] == magic_card_id:
-            return render_template("magic-card.html", value=card, setCSV=importSetCSV(), cards=cards)
+            return render_template("magic-card.php", value=card, setCSV=importSetCSV(), cards=cards)
 
 if __name__ == "__main__":
     app.run(debug=True)

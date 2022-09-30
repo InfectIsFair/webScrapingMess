@@ -24,12 +24,15 @@ def mtgSet2CSV(set, maxNum):
         print(num + 1)
 
 
+mtgSet2CSV("STA", 126)
+mtgSet2CSV("XLN", 289)
+
 # alchemy sucks
 
 # Japanese cards
 # mtgSet2CSV("WAR", 312)
 
-# card backs
+# flip cards
 # Uvilda & Nassari
 
 # card variations (rules txt for starter decks)

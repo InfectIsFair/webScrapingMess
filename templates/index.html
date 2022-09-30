@@ -24,7 +24,7 @@
     function randomHand() {
         let text = "display-hand-";
         let url = "display-link-";
-        // let dns = "/magic-card-database/"
+        let dns = "static/images/tcg-master-base_"
         let num = 0;
         let x;
         let y;
@@ -40,15 +40,17 @@
             imgId = text.concat(num);
             linkId = url.concat(num);
             if (!(randomCards.includes(cards[x][0]))) {
-                let dns;
                 if (cards[x][1] === "MTG") {
                     dns = "/magic-card-database/";
                 } else if (cards[x][1] === "PTCG") {
                     dns = "/pokemon-card-database/"
                 }
-                document.getElementById(imgId).src = cards[x][6];
+                let imagePath = "static/tcg-master-base_";
+                imagePath = imagePath.concat(cards[x][0]);
+                imagePath = imagePath.concat(".jpeg")
+                document.getElementById(imgId).src = imagePath;
                 let temp = dns.concat(cards[x][0]);
-                y = temp.concat("/")
+                y = temp.concat("/");
                 document.getElementById(linkId).href = y;
                 i = i + 1;
                 randomCards.push(cards[x][0]);
