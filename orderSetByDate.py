@@ -1,5 +1,6 @@
 import datetime
 import numpy as np
+from sqlalchemy import desc
 
 def sortSets():
     setList = []
@@ -18,11 +19,11 @@ def sortSets():
 
     setList = np.array(setList)
 
-    sorted_array = setList[np.argsort(setList[:, 1])]
-    
+    setList = setList[setList[:, 1].argsort()]
+
     setCSV = open("mtg-set.csv", "w")
     sortId = 1
-    for file in sorted_array:
+    for file in setList:
         setCSV.write(str(sortId) + "/")
         for item in file:
             setCSV.write(item)

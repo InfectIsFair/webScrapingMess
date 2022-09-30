@@ -29,6 +29,9 @@ def mtgSet2CSV(set, maxNum):
 # Japanese cards
 # mtgSet2CSV("WAR", 312)
 
+# card backs
+# Uvilda & Nassari
+
 # card variations (rules txt for starter decks)
 # mtgSet2CSV("KLD", 278)
 # mtgSet2CSV("AER", 197)

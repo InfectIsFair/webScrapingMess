@@ -24,7 +24,7 @@
     function randomHand() {
         let text = "display-hand-";
         let url = "display-link-";
-        let dns = "/card-database/"
+        // let dns = "/magic-card-database/"
         let num = 0;
         let x;
         let y;
@@ -40,6 +40,12 @@
             imgId = text.concat(num);
             linkId = url.concat(num);
             if (!(randomCards.includes(cards[x][0]))) {
+                let dns;
+                if (cards[x][1] === "MTG") {
+                    dns = "/magic-card-database/";
+                } else if (cards[x][1] === "PTCG") {
+                    dns = "/pokemon-card-database/"
+                }
                 document.getElementById(imgId).src = cards[x][6];
                 let temp = dns.concat(cards[x][0]);
                 y = temp.concat("/")
