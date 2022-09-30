@@ -30,5 +30,3 @@ def sortSets():
             setCSV.write("/")
         setCSV.write("\n")
         sortId += 1
-
-sortSets()

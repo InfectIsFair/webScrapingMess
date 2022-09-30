@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import orderSetCSVByDate
 
 def importCSV():
     returnList = []
@@ -18,10 +19,14 @@ def importSetCSV():
     return returnList
 
 
+orderSetCSVByDate.sortSets()
+
 app = Flask(__name__)
 
 cards = importCSV()
 cardsLength = len(cards)
+
+
 
 @app.route('/')
 def index():

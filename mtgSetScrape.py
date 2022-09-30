@@ -23,10 +23,6 @@ def mtgSet2CSV(set, maxNum):
 
         print(num + 1)
 
-
-mtgSet2CSV("STA", 126)
-mtgSet2CSV("XLN", 289)
-
 # alchemy sucks
 
 # Japanese cards

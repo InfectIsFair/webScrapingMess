@@ -44,6 +44,17 @@
                 <li><a href="#">Sit</a></li>
                 <li><a href="#">Amet</a></li>
                 <li><a href="#">Consectetur</a></li>
+                <li><a href="#"><?= "HI"; ?></a></li>
+                <?php
+
+                $cardName = {{ value[2] }};
+                $cards = {{ cards }};
+                foreach ($cards as $value) {
+                    if ($value[2] === $cardName) {
+                        echo "<li><a href='#'>{$value} | {$value[4]} | {$value[6]}</a></li>";
+                    }
+                }
+                ?>
             </ul>
             <div class="card-buttons">
                 <div class="card-buttons__div">
@@ -66,7 +77,7 @@
     Our database doesn't go any further.
 </div>
 
-<script>    
+<script>
     function nextCardView(wantError) {
         setCSV = {{ setCSV|tojson }};
         if (wantError) {
