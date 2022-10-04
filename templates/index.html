@@ -7,13 +7,13 @@
     <section class="wrapper">
         <p class="home-main-text bottom--120 top--100">Welcome to the TCG Master Base! This website is early in development, but big in aspirations. I'm hoping to make this website the main way people organise their card collections across all TCGs. And I can't do that without your help. If you have any suggestions, or TCGs you want added, or even a more pressing issue such as a fault with the site, use the <a href="#">Contact</a> section. However, if you just want to chat with other users you could post on the <a href="#">Forums</a> instead.</p>
         <ul class="display-hand bottom--50">
-            <a href="#" id="display-link-1" target="_blank"><img id="display-hand-1" src=""></img></a>
-            <a href="#" id="display-link-2" target="_blank"><img id="display-hand-2" src=""></img></a>
-            <a href="#" id="display-link-3" target="_blank"><img id="display-hand-3" src=""></img></a>
-            <a href="#" id="display-link-4" target="_blank"><img id="display-hand-4" src=""></img></a>
-            <a href="#" id="display-link-5" target="_blank"><img id="display-hand-5" src=""></img></a>
-            <a href="#" id="display-link-6" target="_blank"><img id="display-hand-6" src=""></img></a>
-            <a href="#" id="display-link-7" target="_blank"><img id="display-hand-7" src=""></img></a>
+            <a href="#" id="display-link-1" target="_blank"><img id="display-hand-1"></img></a>
+            <a href="#" id="display-link-2" target="_blank"><img id="display-hand-2"></img></a>
+            <a href="#" id="display-link-3" target="_blank"><img id="display-hand-3"></img></a>
+            <a href="#" id="display-link-4" target="_blank"><img id="display-hand-4"></img></a>
+            <a href="#" id="display-link-5" target="_blank"><img id="display-hand-5"></img></a>
+            <a href="#" id="display-link-6" target="_blank"><img id="display-hand-6"></img></a>
+            <a href="#" id="display-link-7" target="_blank"><img id="display-hand-7"></img></a>
         </ul>
     </section>
 </main>
@@ -45,10 +45,10 @@
                 } else if (cards[x][1] === "PTCG") {
                     dns = "/pokemon-card-database/"
                 }
-                let imagePath = "static/tcg-master-base_";
-                imagePath = imagePath.concat(cards[x][0]);
-                imagePath = imagePath.concat(".jpeg")
-                document.getElementById(imgId).src = imagePath;
+                let imdDNS = "/static/tcg-master-base_";
+                imgDNS = imdDNS.concat(cards[x][0]);
+                imgDNS = imgDNS.concat(".jpeg");
+                document.getElementById(imgId).src = imgDNS;
                 let temp = dns.concat(cards[x][0]);
                 y = temp.concat("/");
                 document.getElementById(linkId).href = y;

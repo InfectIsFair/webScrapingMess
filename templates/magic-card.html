@@ -24,7 +24,7 @@
                     <label for="setnum">Set number</label>
                     <p style="padding-bottom: 25px;" id="setnum">{{ value[5] }}</p>
                     <label style="padding-top: 25px;" for="price">Price</label>
-                    <p id="price">{{ value[7] }}</p>
+                    <p id="price">{{ value[6] }}</p>
                 </div>
             </div>
             <!-- card text -->
@@ -32,19 +32,12 @@
         </div>
         <!-- card image -->
         <div class="card-img-div">
-            <img src="{{ value[6] }}" alt="Image of {{ value[2] }}" class="card-img-div__child">
+            <img alt="Image of {{ value[2] }}" class="card-img-div__child" src="{{url_for('static', filename='tcg-master-base_' + value[0] + '.jpeg')}}">
         </div>
         <!-- interactivity -->
         <div class="card-main__div">
             <h3>Other printings / variations of this card:</h3>
-            <ul>
-                <li><a href="#">Lorem</a></li>
-                <li><a href="#">Ipsum</a></li>
-                <li><a href="#">Dolor</a></li>
-                <li><a href="#">Sit</a></li>
-                <li><a href="#">Amet</a></li>
-                <li><a href="#">Consectetur</a></li>
-            </ul>
+            <ul id="variant-list"></ul>
             <div class="card-buttons">
                 <div class="card-buttons__div">
                     <button onclick="lastCardView(false)">Previous card</button>
@@ -62,7 +55,39 @@
 {% endblock %}
 
 {% block footer %}
+<div id="snackbar">
+    Our database doesn't go any further.
+</div>
+
 <script>
+    let cardName = {{ value[2]|tojson }};
+    let cards = {{ cards|tojson }};
+    cards.forEach(nameCheckLoop);
+
+    function nameCheckLoop(item) {
+        let dnsExtension = "/magic-card-database/M";
+        if (item[2] === cardName) {
+            let ul = document.getElementById("variant-list");
+            let li = document.createElement("li");
+            let a = document.createElement("a");
+            const textDivider = " | ";
+            let innerText = item[2];
+            innerText = innerText.concat(textDivider);
+            innerText = innerText.concat(item[4]);
+            innerText = innerText.concat(textDivider);
+            innerText = innerText.concat(item[5]);
+            innerText = innerText.concat(textDivider);
+            innerText = innerText.concat(item[6]);
+            a.appendChild(document.createTextNode(innerText));
+            dnsExtension = dnsExtension.concat(item[4].toLowerCase());
+            dnsExtension = dnsExtension.concat(String(item[5]));
+            a.href = dnsExtension;
+            a.className = "variant-li";
+            li.appendChild(a);
+            ul.appendChild(li);
+        }
+    }
+
     function nextCardView(wantError) {
         setCSV = {{ setCSV|tojson }};
         if (wantError) {
@@ -119,9 +144,11 @@
     }
 
     function setUp() {
+        console.log("Hello world!");
         setCSV = {{ setCSV|tojson }};
         let curSetU = {{ value[4]|tojson }};
         let newSetUp;
+        let setCheckUp = false;
 
         for (let i=0; i < setCSV.length; i++) {
             if (curSetU === setCSV[i][1]) {
@@ -129,23 +156,28 @@
                     newSetUp = setCSV[i+1][1];
                     newSetUp = newSetUp;
                 } catch {
-                    newSetNum = "1";
-                    newSetUp = curSetU;
-                    console.log("L");
+                    setCheckUp = true;
+                    let toast = document.getElementById("snackbar");
+                    toast.className = "show";
+                    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
                 }
             }
         }
 
-        dnsExtension = "/magic-card-database/";
-        dnsExtension = dnsExtension.concat("M" + newSetUp.toLowerCase() + "1/");
-        window.location.href = dnsExtension;
+        if (setCheckUp == false) {
+            dnsExtension = "/magic-card-database/";
+            dnsExtension = dnsExtension.concat("M" + newSetUp.toLowerCase() + "1/");
+            window.location.href = dnsExtension;
+        }
     }
 
     function setDown() {
+        console.log("Hello world!");
         setCSV = {{ setCSV|tojson }};
         let curSetD = {{ value[4]|tojson }};
         let newSetNum;
         let newSetDown;
+        let setCheckDown = false;
 
         for (let i=0; i < setCSV.length; i++) {
             if (curSetD === setCSV[i][1]) {
@@ -154,16 +186,18 @@
                     newSetDown = setCSV[i-1][1];
                     newSetDown = newSetDown;
                 } catch {
-                    newSetNum = "1";
-                    newSetDown = curSetD;
-                    console.log("L");
+                    setCheckDown = true;
+                    let toast = document.getElementById("snackbar");
+                    toast.className = "show";
+                    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
                 }
             }
         }
-
-        dnsExtension = "/magic-card-database/";
-        dnsExtension = dnsExtension.concat("M" + newSetDown.toLowerCase() + newSetNum + "/");
-        window.location.href = dnsExtension;
+        if (setCheckDown == false) {
+            dnsExtension = "/magic-card-database/";
+            dnsExtension = dnsExtension.concat("M" + newSetDown.toLowerCase() + newSetNum + "/");
+            window.location.href = dnsExtension;
+        }
     }
 </script>
 {% endblock %}
