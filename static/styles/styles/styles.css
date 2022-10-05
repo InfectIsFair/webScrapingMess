@@ -6,6 +6,25 @@
   --reddit-color: #ff4500;
 }
 
+.test-background {
+  position: absolute;
+  background-image: url(https://i.pinimg.com/originals/5d/f3/b2/5df3b24bd1cae6cdd93a42fc22fec3f6.jpg) !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-color: transparent !important;
+}
+
+.test-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e66465), to(#9198e5));
+  background: linear-gradient(#e66465, #9198e5);
+}
+
 html {
   background-color: var(--secondary-color);
 }
@@ -20,6 +39,10 @@ html {
 
 .top--50 {
   margin-top: 50px !important;
+}
+
+.top--60 {
+  margin-top: 60px !important;
 }
 
 .top--100 {
@@ -132,16 +155,9 @@ nav ul {
 }
 
 nav ul a {
-  background-color: white;
   padding: 5px;
   color: var(--font-color);
   text-decoration: none;
-  border: solid black;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
 }
 
 nav ul li {
@@ -157,6 +173,28 @@ nav ul div {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+}
+
+.index-text {
+  margin: 0 auto;
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.index-text h1 {
+  margin: 20px 0;
+  line-height: 45px;
+}
+
+.index-text > * {
+  padding: 10px;
+  line-height: 30px;
 }
 
 footer {
@@ -181,16 +219,6 @@ footer div {
           flex-direction: column;
 }
 
-footer div div {
-  background-color: white;
-  border: solid black;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
-}
-
 .footer-legals {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -207,29 +235,15 @@ footer div div {
 }
 
 .footer-legals > * {
-  background-color: white;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  border: solid black;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
 }
 
 .home-main-text {
-  background-color: white;
   text-align: center;
   font-size: 1.4rem;
   padding: 10px 50px;
-  border: solid black;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
 }
 
 .home-main-text a {
@@ -284,12 +298,13 @@ footer div div {
 }
 
 .about-text {
-  background-color: white;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   font-size: 1.4rem;
   padding: 10px 50px;
+  line-height: 30px;
+  background-color: rgba(255, 255, 255, 0.5);
   border: solid black;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -325,6 +340,7 @@ footer div div {
   padding: 6px;
   margin-bottom: 25px;
   font-size: 18px;
+  background-color: rgba(255, 255, 255, 0.5);
   border: solid black;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -337,6 +353,7 @@ footer div div {
   height: 503px;
   padding: 6px;
   margin-bottom: 25px;
+  background-color: rgba(255, 255, 255, 0.5);
   border: solid black;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -420,7 +437,8 @@ footer div div {
   width: 60%;
   height: 50px;
   font-size: 18px;
-  background-color: white;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.5);
   border: solid black;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -447,12 +465,12 @@ footer div div {
 }
 
 .card-main__div {
-  background-color: white;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   width: 30%;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
   border: solid black;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -486,15 +504,8 @@ footer div div {
 }
 
 .card-main__div button {
-  background-color: white;
   font-size: 1rem;
   padding: 5px;
-  border: solid black;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
 }
 
 .card-main__div button:hover {
@@ -507,11 +518,11 @@ footer div div {
 }
 
 .card-main__div li:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .card-main__div li:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .card-main__div li {
@@ -554,8 +565,16 @@ footer div div {
   width: 40%;
 }
 
-.card-col-div :nth-child(2) {
+.card-col-div #set {
+  width: 65px;
+}
+
+.card-col-div--border-bottom :nth-child(2) {
   border-bottom: solid rgba(0, 0, 0, 0.5);
+}
+
+.card-col-div--border-top :nth-child(3) {
+  border-top: solid rgba(0, 0, 0, 0.5);
 }
 
 .card-text {
@@ -607,6 +626,16 @@ footer div div {
       justify-content: space-around;
 }
 
+.card-buttons__div > * {
+  background-color: white;
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
 .card-buttons div:not(:last-child) {
   margin-top: 50px;
 }
@@ -618,17 +647,18 @@ footer div div {
 }
 
 #snackbar {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  text-align: center;
-  color: #fff;
-  background-color: #333;
-  padding: 16px;
-  left: 50%;
-  bottom: 30px;
+  visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
   border-radius: 15px;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
@@ -636,13 +666,12 @@ footer div div {
   -o-border-radius: 15px;
 }
 
-.show {
-  display: block !important;
+#snackbar.show {
+  visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-/* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
   from {
     bottom: 0;

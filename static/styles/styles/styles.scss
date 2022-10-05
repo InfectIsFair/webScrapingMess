@@ -8,6 +8,23 @@
     // --secondary-color: #000000;
 }
 
+.test-background {
+    position: absolute;
+    background-image: url(https://i.pinimg.com/originals/5d/f3/b2/5df3b24bd1cae6cdd93a42fc22fec3f6.jpg) !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+}
+.test-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(#e66465, #9198e5);
+}
+
 html {
     background-color: var(--secondary-color);
 }
@@ -22,6 +39,9 @@ html {
 .top {
     &--50 {
         margin-top: 50px !important;
+    }
+    &--60 {
+        margin-top: 60px !important;
     }
     &--100 {
         margin-top: 100px !important;
@@ -101,16 +121,9 @@ nav {
         list-style: none;
         color: var(--font-color);
         a {
-            background-color: white;
             padding: 5px;
             color: var(--font-color);
             text-decoration: none;
-            border: solid black;
-            border-radius: 15px;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            -ms-border-radius: 15px;
-            -o-border-radius: 15px;
         }
         li {
             font-size: 1.5rem;
@@ -123,6 +136,26 @@ nav {
     }
 }
 
+.index-text {
+    margin: 0 auto;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: solid black;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    h1 {
+        margin: 20px 0;
+        line-height: 45px;
+    }
+    > * {
+        padding: 10px;
+        line-height: 30px;
+    }
+}
+
 // footer
 footer {
     background-color: var(--secondary-color);
@@ -132,19 +165,10 @@ footer {
         text-decoration: none;
         font-size: 1.5rem;
         padding: 20px 35px;
-}
+    }
     div {
         display: flex;
         flex-direction: column;
-        div {
-            background-color: white;
-            border: solid black;
-            border-radius: 15px;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            -ms-border-radius: 15px;
-            -o-border-radius: 15px;
-}
     }
 }
 
@@ -155,29 +179,15 @@ footer {
     width: 100%;
     padding: 15px 0;
     > * {
-        background-color: white;
         height:fit-content;
-        border: solid black;
-        border-radius: 15px;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
-        -ms-border-radius: 15px;
-        -o-border-radius: 15px;
     }
 }
 
 // index main
 .home-main-text {
-    background-color: white;
     text-align: center;
     font-size: 1.4rem;
     padding: 10px 50px;
-    border: solid black;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
     a {
         color: var(--font-color);
         text-decoration: underline;
@@ -219,10 +229,11 @@ footer {
 }
 
 .about-text {
-    background-color: white;
     height: fit-content;
     font-size: 1.4rem;
     padding: 10px 50px;
+    line-height: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
     border: solid black;
     border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -256,6 +267,7 @@ footer {
         padding: 6px;
         margin-bottom: 25px;
         font-size: 18px;
+        background-color: rgba(255, 255, 255, 0.5);
         border: solid black;
         border-radius: 15px;
         -webkit-border-radius: 15px;
@@ -267,6 +279,7 @@ footer {
         height: 503px;
         padding: 6px;
         margin-bottom: 25px;
+        background-color: rgba(255, 255, 255, 0.5);
         border: solid black;
         border-radius: 15px;
         -webkit-border-radius: 15px;
@@ -326,7 +339,8 @@ footer {
     width: 60%;
     height: 50px;
     font-size: 18px;
-    background-color: white;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.5);
     border: solid black;
     border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -343,10 +357,10 @@ footer {
     align-items: center;
     margin: 50px;
     &__div {
-        background-color: white;
         height:fit-content;
         width: 30%;
         padding: 20px;
+        background-color: rgba(255, 255, 255, 0.5);
         border: solid black;
         border-radius: 15px;
         -webkit-border-radius: 15px;
@@ -374,15 +388,8 @@ footer {
             margin-bottom: 10px;
         }
         button {
-            background-color: white;
             font-size: 1rem;
             padding: 5px;
-            border: solid black;
-            border-radius: 15px;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            -ms-border-radius: 15px;
-            -o-border-radius: 15px;
         }
         button:hover {
             cursor: pointer;
@@ -394,10 +401,10 @@ footer {
             }
         }
         li:nth-child(odd) {
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.3);
         }
         li:nth-child(even) {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.2);
         }
         li {
             font-size: 1.2rem;
@@ -426,8 +433,18 @@ footer {
     flex-direction: column;
     justify-content: space-around;
     width: 40%;
-    :nth-child(2) {
-        border-bottom: solid rgba(0, 0, 0, 0.5);
+    #set {
+        width: 65px;
+    }
+    &--border-bottom {
+        :nth-child(2) {
+            border-bottom: solid rgba(0, 0, 0, 0.5);
+        }
+    }
+    &--border-top {
+        :nth-child(3) {
+            border-top: solid rgba(0, 0, 0, 0.5);
+        }
     }
 }
 
@@ -459,6 +476,15 @@ footer {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
+        > * {
+            background-color: white;
+            border: solid black;
+            border-radius: 15px;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            -ms-border-radius: 15px;
+            -o-border-radius: 15px;
+        }
     }
     div:not(:last-child) {
         margin-top: 50px;
@@ -471,18 +497,21 @@ footer {
     margin: 10px 0;
 }
 
-#snackbar {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    text-align: center;
-    color: #fff;
-    background-color: #333;
-    padding: 16px;
-    left: 50%;
-    bottom: 30px;
+// toast for set-limit
+
+ #snackbar {
+    visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
     border-radius: 15px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
@@ -490,32 +519,31 @@ footer {
     -o-border-radius: 15px;
 }
 
-.show {
-    display: block !important;
+  #snackbar.show {
+    visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-/* Animations to fade the snackbar in and out */
-@-webkit-keyframes fadein {
+  }
+  
+  @-webkit-keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
+  }
+  
+  @keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
+  }
+  
+  @-webkit-keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
+  }
+  
+  @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-}
+  } 
 
 // media queries
 
