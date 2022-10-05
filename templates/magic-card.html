@@ -4,23 +4,23 @@
 
 
 {% block main %}
-<main>
+<main class="test-background">
     <section class="card-main">
         <!-- card details -->
         <div class="card-main__div">
             <!-- card name -->
-            <h1 class="bottom--60">{{ value[2] }}</h1>
+            <h1 class="bottom--60 top--60">{{ value[2] }}</h1>
             <!-- card details -->
             <div class="card-details-div">
                 <!-- set & rarity -->
-                <div class="card-col-div">
+                <div class="card-col-div card-col-div--border-top">
                     <label for="set">Card set</label>
-                    <p style="padding-bottom: 25px;" id="set">{{ value[4] }}</p>
+                    <img id="set">
                     <label style="padding-top: 25px;" for="rarity">Rarity</label>
                     <p id="rarity">{{ value[3] }}</p>
                 </div>
                 <!-- setnum & price -->
-                <div class="card-col-div">
+                <div class="card-col-div card-col-div--border-bottom">
                     <label for="setnum">Set number</label>
                     <p style="padding-bottom: 25px;" id="setnum">{{ value[5] }}</p>
                     <label style="padding-top: 25px;" for="price">Price</label>
@@ -60,9 +60,14 @@
 </div>
 
 <script>
+    // finds and displays all cards with the same name
     let cardName = {{ value[2]|tojson }};
     let cards = {{ cards|tojson }};
     cards.forEach(nameCheckLoop);
+
+    // finds current set and displays set symbol
+    let setList = {{ setCSV|tojson }};
+    setList.forEach(displaySetSymbol);
 
     function nameCheckLoop(item) {
         let dnsExtension = "/magic-card-database/M";
@@ -85,6 +90,14 @@
             a.className = "variant-li";
             li.appendChild(a);
             ul.appendChild(li);
+        }
+    }
+
+    function displaySetSymbol(item) {
+        let curSet = {{ value[4]|tojson }};
+        if (curSet === item[1]) {
+            document.getElementById("set").src = "../../static/" + item[4];
+            document.getElementById("set").alt = item[1] + " set symbol"
         }
     }
 
@@ -184,7 +197,6 @@
                 try {
                     newSetNum = setCSV[i-1][3];
                     newSetDown = setCSV[i-1][1];
-                    newSetDown = newSetDown;
                 } catch {
                     setCheckDown = true;
                     let toast = document.getElementById("snackbar");

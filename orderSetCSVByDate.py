@@ -10,7 +10,7 @@ def sortSets():
         line = line.split("/")
         returnList = []
         for i in range(len(line)):
-            if (i != 0) and (i != 4):
+            if (i != 0) and (i != 5):
                 returnList.append(line[i])
         
         setList.append(returnList)
@@ -30,3 +30,5 @@ def sortSets():
             setCSV.write("/")
         setCSV.write("\n")
         sortId += 1
+
+sortSets()
