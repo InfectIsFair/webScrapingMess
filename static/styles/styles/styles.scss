@@ -5,15 +5,17 @@
     --font-color: black;
     --discord-color: #5865f2;
     --reddit-color: #ff4500;
-    // --secondary-color: #000000;
 }
 
 .test-background {
-    position: absolute;
+    position: relative;
     background-image: url(https://i.pinimg.com/originals/5d/f3/b2/5df3b24bd1cae6cdd93a42fc22fec3f6.jpg) !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-color: transparent !important;
+    > * {
+        z-index: 2;
+    }
 }
 .test-background::after {
     content: "";
@@ -22,7 +24,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(#e66465, #9198e5);
+    background: linear-gradient(#d3e4eb, #99594f);
+    opacity: 0.5;
+    z-index: 1;
 }
 
 html {
@@ -136,24 +140,54 @@ nav {
     }
 }
 
-.index-text {
-    margin: 0 auto;
-    width: 80%;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: solid black;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    h1 {
-        margin: 20px 0;
-        line-height: 45px;
+#databaseDropdownMenu {
+    top: 69px;
+    z-index: 500;
+}
+
+.databaseDropdown {
+    float: left;
+    overflow: hidden;
+    .databaseBtn {
+        cursor: pointer;
+        font-size: 16px;  
+        border: none;
+        outline: none;
+        padding: 14px 16px;
+        background-color: var(--secondary-color);
+        font-family: inherit;
+        font-size: 1.5rem;
+        margin: 0;
     }
-    > * {
-        padding: 10px;
-        line-height: 30px;
+}
+  
+.dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-color);
+    min-width: 160px;
+    border: solid var(--secondary-color);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        display: block;
+        text-align: left;
     }
+    a:hover {
+        background-color: #ddd;
+    }
+    :not(:last-child) {
+        border-bottom: solid var(--secondary-color);
+    }
+}
+  
+.show {
+    display: block;
 }
 
 // footer
@@ -163,7 +197,7 @@ footer {
     a {
         color: var(--font-color);
         text-decoration: none;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         padding: 20px 35px;
     }
     div {
@@ -191,7 +225,7 @@ footer {
     a {
         color: var(--font-color);
         text-decoration: underline;
-    }    
+    }
 }
 
 .display-hand {
@@ -211,6 +245,26 @@ footer {
         z-index: 5;
         cursor: pointer;
         bottom: 50px;
+    }
+}
+
+.index-text {
+    margin: 0 auto;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: solid black;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    h1 {
+        margin: 20px 0;
+        line-height: 45px;
+    }
+    > * {
+        padding: 10px;
+        line-height: 30px;
     }
 }
 
@@ -264,6 +318,7 @@ footer {
     }
     input[type=text], input[type=tel], input[type=email] {
         height: 34px;
+        letter-spacing: 0.1rem;
         padding: 6px;
         margin-bottom: 25px;
         font-size: 18px;
@@ -277,7 +332,11 @@ footer {
 }
     textarea {
         height: 503px;
-        padding: 6px;
+        letter-spacing: 0.1rem;
+        line-height: 29px;
+        font-size: 20px;
+        font-weight: 500;
+        padding: 20px;
         margin-bottom: 25px;
         background-color: rgba(255, 255, 255, 0.5);
         border: solid black;
@@ -289,6 +348,15 @@ footer {
         resize: none;
     }
 }
+
+#form-message {
+    letter-spacing: 0.1rem;
+    line-height: 29px;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 20px;
+}
+   
 
 .contact-section {
     display: flex;
@@ -466,8 +534,9 @@ footer {
         -moz-border-radius: 6%;
         -ms-border-radius: 6%;
         -o-border-radius: 6%;
+    }
 }
-}
+
 
 .card-buttons {
     display: flex;
@@ -509,7 +578,7 @@ footer {
     border-radius: 2px;
     padding: 16px;
     position: fixed;
-    z-index: 1;
+    z-index: 500;
     left: 50%;
     bottom: 30px;
     border-radius: 15px;
@@ -519,31 +588,49 @@ footer {
     -o-border-radius: 15px;
 }
 
-  #snackbar.show {
+#snackbar.show {
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  }
-  
-  @-webkit-keyframes fadein {
+}
+
+@-webkit-keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
-  }
-  
-  @keyframes fadein {
+}
+
+@keyframes fadein {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
-  }
-  
-  @-webkit-keyframes fadeout {
+}
+
+@-webkit-keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-  }
-  
-  @keyframes fadeout {
+}
+
+@keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-  } 
+} 
+
+// mtg database
+#card-list {
+    display: grid;
+    justify-content: space-evenly;
+    margin: 7%;
+    grid-template-columns: 360px 360px 360px 360px;
+    img {
+        width: 100%;
+        margin: 15px 0;
+        border: solid black;
+        border-radius: 5%;
+        -webkit-border-radius: 5%;
+        -moz-border-radius: 5%;
+        -ms-border-radius: 5%;
+        -o-border-radius: 5%;
+    }
+}
 
 // media queries
 

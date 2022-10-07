@@ -7,11 +7,15 @@
 }
 
 .test-background {
-  position: absolute;
+  position: relative;
   background-image: url(https://i.pinimg.com/originals/5d/f3/b2/5df3b24bd1cae6cdd93a42fc22fec3f6.jpg) !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-color: transparent !important;
+}
+
+.test-background > * {
+  z-index: 2;
 }
 
 .test-background::after {
@@ -21,8 +25,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#e66465), to(#9198e5));
-  background: linear-gradient(#e66465, #9198e5);
+  background: -webkit-gradient(linear, left top, left bottom, from(#d3e4eb), to(#99594f));
+  background: linear-gradient(#d3e4eb, #99594f);
+  opacity: 0.5;
+  z-index: 1;
 }
 
 html {
@@ -175,26 +181,59 @@ nav ul div {
           flex-direction: row;
 }
 
-.index-text {
-  margin: 0 auto;
-  width: 80%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: solid black;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
+#databaseDropdownMenu {
+  top: 69px;
+  z-index: 500;
 }
 
-.index-text h1 {
-  margin: 20px 0;
-  line-height: 45px;
+.databaseDropdown {
+  float: left;
+  overflow: hidden;
 }
 
-.index-text > * {
-  padding: 10px;
-  line-height: 30px;
+.databaseDropdown .databaseBtn {
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: var(--secondary-color);
+  font-family: inherit;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: var(--primary-color);
+  min-width: 160px;
+  border: solid var(--secondary-color);
+  -webkit-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdownContent a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  display: block;
+  text-align: left;
+}
+
+.dropdownContent a:hover {
+  background-color: #ddd;
+}
+
+.dropdownContent :not(:last-child) {
+  border-bottom: solid var(--secondary-color);
+}
+
+.show {
+  display: block;
 }
 
 footer {
@@ -205,7 +244,7 @@ footer {
 footer a {
   color: var(--font-color);
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   padding: 20px 35px;
 }
 
@@ -268,6 +307,28 @@ footer div {
   z-index: 5;
   cursor: pointer;
   bottom: 50px;
+}
+
+.index-text {
+  margin: 0 auto;
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: solid black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.index-text h1 {
+  margin: 20px 0;
+  line-height: 45px;
+}
+
+.index-text > * {
+  padding: 10px;
+  line-height: 30px;
 }
 
 .about-container {
@@ -337,6 +398,7 @@ footer div {
 
 #contact-form input[type=text], #contact-form input[type=tel], #contact-form input[type=email] {
   height: 34px;
+  letter-spacing: 0.1rem;
   padding: 6px;
   margin-bottom: 25px;
   font-size: 18px;
@@ -351,7 +413,11 @@ footer div {
 
 #contact-form textarea {
   height: 503px;
-  padding: 6px;
+  letter-spacing: 0.1rem;
+  line-height: 29px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 20px;
   margin-bottom: 25px;
   background-color: rgba(255, 255, 255, 0.5);
   border: solid black;
@@ -361,6 +427,14 @@ footer div {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
   resize: none;
+}
+
+#form-message {
+  letter-spacing: 0.1rem;
+  line-height: 29px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 20px;
 }
 
 .contact-section {
@@ -656,7 +730,7 @@ footer div {
   border-radius: 2px;
   padding: 16px;
   position: fixed;
-  z-index: 1;
+  z-index: 500;
   left: 50%;
   bottom: 30px;
   border-radius: 15px;
@@ -714,6 +788,28 @@ footer div {
     bottom: 0;
     opacity: 0;
   }
+}
+
+#card-list {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin: 7%;
+  -ms-grid-columns: 360px 360px 360px 360px;
+      grid-template-columns: 360px 360px 360px 360px;
+}
+
+#card-list img {
+  width: 100%;
+  margin: 15px 0;
+  border: solid black;
+  border-radius: 5%;
+  -webkit-border-radius: 5%;
+  -moz-border-radius: 5%;
+  -ms-border-radius: 5%;
+  -o-border-radius: 5%;
 }
 
 @media (max-width: 1450px) {
