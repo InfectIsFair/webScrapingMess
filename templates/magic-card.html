@@ -9,7 +9,7 @@
         <!-- card details -->
         <div class="card-main__div">
             <!-- card name -->
-            <h1 class="bottom--60 top--60">{{ value[2] }}</h1>
+            <h1 class="bottom--60 top--60" style="word-break: break-word;">{{ value[2] }}</h1>
             <!-- card details -->
             <div class="card-details-div">
                 <!-- set & rarity -->
@@ -84,6 +84,7 @@
             innerText = innerText.concat(textDivider);
             innerText = innerText.concat(item[6]);
             a.appendChild(document.createTextNode(innerText));
+            dnsExtension = dnsExtension.concat()
             dnsExtension = dnsExtension.concat(item[4].toLowerCase());
             dnsExtension = dnsExtension.concat(String(item[5]));
             a.href = dnsExtension;

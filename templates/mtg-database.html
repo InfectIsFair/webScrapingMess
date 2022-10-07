@@ -1,0 +1,72 @@
+{% extends 'template.html' %}
+
+{% block title %} - MTG Database{% endblock %}
+
+{% block main %}
+<main>
+    <section>
+        <button onclick="pageUp(true)">Next page</button>
+        <button onclick="pageUp(false)">Previous page</button>
+    </section>
+    <section>
+        <div id="card-list"></div>
+    </section>
+    <section>
+        <button onclick="pageUp(true)">Next page</button>
+        <button onclick="pageUp(false)">Previous page</button>
+    </section>
+
+    <div id="snackbar">
+        Our database doesn't go any further.
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+<script>
+    let cards = {{ cards|tojson }};
+    let pageNum = {{ pageNum|tojson }};
+    let cardView = 40;
+    // let cardView = 60;
+    // let cardView = 120;
+    upperCount = cardView * pageNum;
+    lowerCount = (cardView * (pageNum - 1)) + 1;
+
+    while (lowerCount < (upperCount + 1)) {
+        let masterDiv = document.getElementById("card-list");
+        let a = document.createElement("a");
+        let aHref = "/magic-card-database/";
+        let img = document.createElement("img");
+        let imgSrc = "../../static/tcg-master-base_";
+        imgSrc = imgSrc.concat(cards[lowerCount - 1][0]);
+        imgSrc = imgSrc.concat(".jpeg");
+        img.src = imgSrc;
+        aHref = aHref.concat(cards[lowerCount - 1][0]);
+        a.href = aHref;
+        masterDiv.appendChild(a);
+        a.appendChild(img);
+
+        lowerCount += 1;
+    }
+
+    function pageUp(up) {
+        let length = {{ length|tojson }};
+        let funcPageNum = Number({{ pageNum|tojson }});
+        let dnsExtension = "/magic-card-database/page";
+        if (up && funcPageNum < (length / cardView)) {
+            dnsExtension = dnsExtension.concat(funcPageNum + 1);
+            dnsExtension = dnsExtension.concat("/")
+            window.location.href = dnsExtension;
+        } else if (funcPageNum > 1 && !up) {
+            dnsExtension = dnsExtension.concat(funcPageNum - 1);
+            dnsExtension = dnsExtension.concat("/")
+            window.location.href = dnsExtension;
+        } else {
+            setCheckDown = true;
+            let toast = document.getElementById("snackbar");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    }
+</script>
+{% endblock %}

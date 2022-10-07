@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from lxml import etree
 import imageSave
+import re
 
 def searchFormat(arg):
     puncList = ['`', '¬', '!', '"', '£', '$', '%', '^',' &', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', '\'', '@', '#', '~',
@@ -101,6 +102,7 @@ def cardDataMTG(set, setNum):
     soup = BeautifulSoup(page.content, 'html.parser')
     dom = etree.HTML(str(soup))
 
+    # gets image & price, if either fails returns blanks
     try:
         imageElement = dom.xpath('//*[@id="main"]/div[1]/div/div[1]/div/img')[0].attrib.get('src')
         priceElement = dom.xpath('//*[@id="stores"]/ul/li[2]/a/span')[0].text
@@ -129,54 +131,58 @@ def cardDataMTG(set, setNum):
     return returnList
 
 
-def cardDataPTCG(set, setNum):
-    cardId = 'P' + set.lower() + str(setNum)
-    TCG = "PTCG"
+print(cardDataMTG("MID", "91"))
+print(cardDataMTG("M21", "184"))
 
-    formatSet = searchFormat(set)
-    formatSetNum = searchFormat(setNum)
 
-    #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
-    URL = 'https://limitlesstcg.com/cards/' + formatSet + '/' + formatSetNum
+# def cardDataPTCG(set, setNum):
+#     cardId = 'P' + set.lower() + str(setNum)
+#     TCG = "PTCG"
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-    }
+#     formatSet = searchFormat(set)
+#     formatSetNum = searchFormat(setNum)
 
-    page = requests.get(URL.lower(), headers=headers)
+#     #formats arguments for search engine, by replacing spaces with dashes, except for last word in arg
+#     URL = 'https://limitlesstcg.com/cards/' + formatSet + '/' + formatSetNum
 
-    soup = BeautifulSoup(page.content, 'html.parser')
-    dom = etree.HTML(str(soup))
+#     headers = {
+#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+#     }
 
-    try:
-        imageElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[1]/img')[0].attrib.get('src')
-        priceElement = dom.xpath('/html/body/main/div/section[2]/div[2]/a[2]/span')[0].text
+#     page = requests.get(URL.lower(), headers=headers)
+
+#     soup = BeautifulSoup(page.content, 'html.parser')
+#     dom = etree.HTML(str(soup))
+
+#     try:
+#         imageElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[1]/img')[0].attrib.get('src')
+#         priceElement = dom.xpath('/html/body/main/div/section[2]/div[2]/a[2]/span')[0].text
         
-        if priceElement != None:
-            price = priceElement.encode("ascii", "ignore")
-            price = price.decode()
-            price = EUR2GBP(price)
-        else:
-            price = "0.00 GBP"
-    except:
-        imageElement = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+#         if priceElement != None:
+#             price = priceElement.encode("ascii", "ignore")
+#             price = price.decode()
+#             price = EUR2GBP(price)
+#         else:
+#             price = "0.00 GBP"
+#     except:
+#         imageElement = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
 
-        price = "0.00 GBP"
+#         price = "0.00 GBP"
 
-    imageSave.saveImage(imageElement, cardId.lower())
-    nameElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/span/a')[0].text
-    name = removePunc(nameElement)
-    nameEncode = name.encode("ascii", 'ignore')
-    nameDecode = nameEncode.decode()
-    name = nameDecode
+#     imageSave.saveImage(imageElement, cardId.lower())
+#     nameElement = dom.xpath('/html/body/main/div/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/span/a')[0].text
+#     name = removePunc(nameElement)
+#     nameEncode = name.encode("ascii", 'ignore')
+#     nameDecode = nameEncode.decode()
+#     name = nameDecode
     
-    rarityElement = dom.xpath('/html/body/main/div/section[1]/div[2]/div/a/div/span[2]')[0].text
-    rarity = rarityElement.split("·")
+#     rarityElement = dom.xpath('/html/body/main/div/section[1]/div[2]/div/a/div/span[2]')[0].text
+#     rarity = rarityElement.split("·")
 
 
-    returnList = [cardId, TCG, name, rarity[1], formatSet, formatSetNum, price]
+#     returnList = [cardId, TCG, name, rarity[1], formatSet, formatSetNum, price]
 
-    return returnList
+#     return returnList
 
 
 # def cardDataPTCGVariants(set, setNum, count):

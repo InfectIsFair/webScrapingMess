@@ -22,9 +22,6 @@ def mtgSet2CSV(set, maxNum):
             count -= 1
 
         print(num + 1)
-        
-    
-mtgSet2CSV("DDS", 65)
 
 # alchemy sucks
 

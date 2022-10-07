@@ -17,7 +17,15 @@
             <ul>
                 <div class="nav-bar">
                     <li><a href="/" style="font-family: Aboreto, cursive; font-weight: bold; letter-spacing: 0.2rem;">TCG Master Base</a></li>
-                    <li><a href="#">Database</a></li>
+                    
+                    <div class="databaseDropdown">
+                        <button class="databaseBtn" onclick="dropdownFunc()">Dropdown <i class="fa fa-caret-down"></i></button>
+                        <div class="dropdownContent" id="databaseDropdownMenu">
+                            <a href="/magic-card-database/page1/">Magic the Gathering</a>
+                            <a href="#">Pokemon TCG</a>
+                        </div>
+                    </div>
+
                     <li><a href="#">My Cards</a></li>
                     <li><a href="#">Forum</a></li>
                 </div>
@@ -44,14 +52,18 @@
     </section>
 
     <script>
-        function burgerMenu() {
-            const x = document.getElementById("burger-items");
-            if (x.style.display === "flex") {
-                x.style.display = "none";
-            } else {
-                x.style.display = "flex";
+        function dropdownFunc() {
+            document.getElementById("databaseDropdownMenu").classList.toggle("show");
+        }
+
+        window.onclick = function(e) {
+            if (!e.target.matches('.databaseBtn')) {
+            let myDropdown = document.getElementById("databaseDropdownMenu");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
             }
-        } 
+        }
     </script>
 
     {% block footer %}{% endblock %}

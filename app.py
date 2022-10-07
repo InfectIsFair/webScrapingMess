@@ -19,6 +19,20 @@ def importSetCSV():
     return returnList
 
 
+def orderMtgCsv(cardCSV, setCSV):
+    orderedMtgArray = []
+
+    # loops through all cards and searches for cards
+    for set in setCSV:
+        for num in range(int(set[3])):
+            for card in cardCSV:
+                if card[0] == ("M" + set[1].lower() + str(num)):
+                    orderedMtgArray.append(card)
+                    break
+    
+    return orderedMtgArray
+
+
 orderSetCSVByDate.sortSets()
 
 app = Flask(__name__)
@@ -26,6 +40,8 @@ app = Flask(__name__)
 cards = importCSV()
 sets = importSetCSV()
 cardsLength = len(cards)
+orderedMtg = orderMtgCsv(cards, sets)
+orderedMtgLength = len(orderedMtg)
 
 
 
@@ -41,7 +57,11 @@ def about():
 def contact():
     return render_template("contact.html", cards=cards)
 
-@app.route('/tcg-master-base_<magic_set_img>-set.png/')
+@app.route('/magic-card-database/page<num>/')
+def mtgDatabase(num):
+    return render_template("mtg-database.html", cards=orderedMtg, pageNum=num, length=orderedMtgLength)
+
+@app.route('/tcg-master-base_M<magic_set_img>-set.png/')
 def MTGSetImage(magic_set_img):
     print(sets)
     for set in sets:
@@ -51,7 +71,7 @@ def MTGSetImage(magic_set_img):
 @app.route('/magic-card-database/<magic_card_id>/')
 def singleCards(magic_card_id):
     for card in cards:
-        if card[0] == magic_card_id:
+        if card[0] == magic_card_id and card[1] == "MTG":
             return render_template("magic-card.html", value=card, setCSV=sets, cards=cards)
     
 
