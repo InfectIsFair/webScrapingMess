@@ -14,7 +14,7 @@ def importSetCSV():
     returnList = []
     librarian = open("mtg-set.csv", "r")
     for line in librarian.readlines():
-        returnList.append(line.split("/"))
+        returnList.append(line.split("¬"))
 
     return returnList
 
@@ -24,7 +24,7 @@ def orderMtgCsv(cardCSV, setCSV):
 
     # loops through all cards and searches for cards
     for set in setCSV:
-        for num in range(int(set[3])):
+        for num in range(int(set[3]) + 1):
             for card in cardCSV:
                 if card[0] == ("M" + set[1].lower() + str(num)):
                     orderedMtgArray.append(card)

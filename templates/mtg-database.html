@@ -4,20 +4,44 @@
 
 {% block main %}
 <main>
-    <section>
-        <button onclick="pageUp(true)">Next page</button>
-        <button onclick="pageUp(false)">Previous page</button>
+    <section class="mtgDbSubNav">
+        <div class="mtgDbSubNav__top-buttons">
+            <button onclick="pageUp(true)">Next page</button>
+            <button onclick="pageUp(false)">Previous page</button>
+        </div>
+        <div>
+            <form method="post">
+                <label for="card-view">Items per page</label>
+                <select id="card-view" name="card-view">
+                     <option value='40' id="40">40</option>
+                     <option value='60' id="60">60</option>
+                     <option value='120' id="120">120</option>
+                </select>
+            </form>
+        </div>
+        <div>
+            <form method="post">
+                <label for="page-num">Page number</label>
+                <select id="page-num" name="page-num"></select>
+            </form>  
+        </div>
     </section>
+
     <section>
         <div id="card-list"></div>
     </section>
-    <section>
+
+    <section class="mtgDbSubNav">
         <button onclick="pageUp(true)">Next page</button>
         <button onclick="pageUp(false)">Previous page</button>
     </section>
 
     <div id="snackbar">
         Our database doesn't go any further.
+    </div>
+
+    <div id="update">
+        Items per page updated.
     </div>
 </main>
 {% endblock %}
@@ -26,34 +50,81 @@
 <script>
     let cards = {{ cards|tojson }};
     let pageNum = {{ pageNum|tojson }};
-    let cardView = 40;
-    // let cardView = 60;
-    // let cardView = 120;
-    upperCount = cardView * pageNum;
-    lowerCount = (cardView * (pageNum - 1)) + 1;
+    let totalCards = {{ length|tojson }};
+    let cardViewForm = document.getElementById("card-view");
+    let cardPageForm = document.getElementById("page-num");
+    let cardView = sessionStorage['cardView'];
+    if (cardView == null) {
+        cardView = 60;
+        sessionStorage['cardView'] = 60;
+    } else {
+        sessionStorage['cardView'] = cardView;
+    }
 
-    while (lowerCount < (upperCount + 1)) {
+    let totalCurrentPages = totalCards / cardView;
+    for (let i = 1; i < (Math.ceil(totalCurrentPages) + 1); i++) {
+        let pageForm = document.getElementById("page-num");
+        let option = document.createElement("option");
+        option.textContent = "Page ".concat(i);
+        option.value = "page".concat(i);
+        option.id = "page".concat(i);
+
+        pageForm.appendChild(option);
+    }
+
+    document.getElementById(sessionStorage['cardView']).selected = true;
+
+    document.getElementById("page".concat(pageNum)).selected = true
+    
+    cardViewForm.addEventListener('click', (function() {
+        cardView = Number(this.value);
+        sessionStorage['cardView'] = cardView;
+        let toast = document.getElementById("update");
+        window.location.href = "/magic-card-database/page1/"
+        toast.className = "show";
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        main(cardView);
+    }));
+
+    cardPageForm.addEventListener('click', (function() {
+        let pageVal = this.value;
+        window.location.href = "/magic-card-database/".concat(pageVal, "/");
+        main(cardView);
+    }));
+
+    main(cardView);
+
+    function main(cardView) {
         let masterDiv = document.getElementById("card-list");
-        let a = document.createElement("a");
-        let aHref = "/magic-card-database/";
-        let img = document.createElement("img");
-        let imgSrc = "../../static/tcg-master-base_";
-        imgSrc = imgSrc.concat(cards[lowerCount - 1][0]);
-        imgSrc = imgSrc.concat(".jpeg");
-        img.src = imgSrc;
-        aHref = aHref.concat(cards[lowerCount - 1][0]);
-        a.href = aHref;
-        masterDiv.appendChild(a);
-        a.appendChild(img);
+        masterDiv.innerHTML = "";
+        upperCount = cardView * pageNum;
+        lowerCount = (cardView * (pageNum - 1)) + 1;
 
-        lowerCount += 1;
+        while (lowerCount < (upperCount + 1)) {
+            let a = document.createElement("a");
+            let aHref = "/magic-card-database/";
+            let img = document.createElement("img");
+            let imgSrc = "../../static/tcg-master-base_";
+            imgSrc = imgSrc.concat(cards[lowerCount - 1][0]);
+            imgSrc = imgSrc.concat(".jpeg");
+            img.src = imgSrc;
+            aHref = aHref.concat(cards[lowerCount - 1][0]);
+            a.href = aHref;
+            masterDiv.appendChild(a);
+            a.appendChild(img);
+
+            lowerCount += 1;
+        }
+
+
     }
 
     function pageUp(up) {
-        let length = {{ length|tojson }};
+        let mtgTotalCards = {{ length|tojson }};
         let funcPageNum = Number({{ pageNum|tojson }});
         let dnsExtension = "/magic-card-database/page";
-        if (up && funcPageNum < (length / cardView)) {
+        sessionCardView = sessionStorage['cardView'];
+        if (up && funcPageNum < (mtgTotalCards / sessionCardView)) {
             dnsExtension = dnsExtension.concat(funcPageNum + 1);
             dnsExtension = dnsExtension.concat("/")
             window.location.href = dnsExtension;
