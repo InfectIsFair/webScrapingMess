@@ -720,7 +720,7 @@ footer div {
   margin: 10px 0;
 }
 
-#snackbar {
+#snackbar, #update {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
@@ -740,7 +740,7 @@ footer div {
   -o-border-radius: 15px;
 }
 
-#snackbar.show {
+#snackbar.show, #update.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
@@ -810,6 +810,51 @@ footer div {
   -moz-border-radius: 5%;
   -ms-border-radius: 5%;
   -o-border-radius: 5%;
+}
+
+.mtgDbSubNav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.mtgDbSubNav > * {
+  padding: 10px;
+  margin: 20px 5%;
+  font-size: 1.2rem;
+  border: solid black;
+  background: white;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.mtgDbSubNav__top-buttons {
+  border: none;
+  background: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+}
+
+.mtgDbSubNav__top-buttons > * {
+  padding: 10px;
+  margin: 0 20px;
+  font-size: 1.2rem;
+  border: solid black;
+  background: white;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
 }
 
 @media (max-width: 1450px) {
