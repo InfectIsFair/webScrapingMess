@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for
 import orderSetCSVByDate
+import sqlCreateDb
 
 def importCSV():
     returnList = []
@@ -76,4 +77,5 @@ def singleCards(magic_card_id):
     
 
 if __name__ == "__main__":
+    sqlCreateDb.createTable
     app.run(debug=True)

@@ -76,11 +76,8 @@ def EUR2GBP(money):
     result += pennyCheck[0]
     result += '.'
     result += pennyCheck[1]
-    
-    output = str(result) + ' GBP'
 
-    # result = result
-    return output
+    return result
 
 
 def cardDataMTG(set, setNum):
@@ -113,11 +110,11 @@ def cardDataMTG(set, setNum):
             price = price.decode()
             price = EUR2GBP(price)
         else:
-            price = "0.00 GBP"
+            price = "0.00"
     except:
         imageElement = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
 
-        price = "0.00 GBP"
+        price = "0.00"
 
     imageSave.saveImage(imageElement, cardId.lower())
     nameElement = dom.xpath('//*[@id="main"]/div[1]/div/div[3]/h1/span[1]')[0].text
@@ -126,6 +123,8 @@ def cardDataMTG(set, setNum):
     rarityElement = dom.xpath('//*[@id="main"]/div[1]/div/div[4]/div[1]/a/span[2]')[0].text
     rarity = rarityElement.split("·")
     
+    card = (cardId, "tcg", name, "rarity", price, "text", "flavour")
+
     returnList = [cardId, TCG, name, rarity[1], formatSet, formatSetNum, price]
     
     return returnList

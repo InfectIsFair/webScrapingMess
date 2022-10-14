@@ -5,24 +5,22 @@
 {% block main %}
 <main>
     <section class="mtgDbSubNav">
-        <div class="mtgDbSubNav__top-buttons">
-            <button onclick="pageUp(true)">Next page</button>
-            <button onclick="pageUp(false)">Previous page</button>
-        </div>
         <div>
             <form method="post">
                 <label for="card-view">Items per page</label>
                 <select id="card-view" name="card-view">
-                     <option value='40' id="40">40</option>
-                     <option value='60' id="60">60</option>
-                     <option value='120' id="120">120</option>
+                    <option value='40' id="40">40</option>
+                    <option value='60' id="60">60</option>
+                    <option value='120' id="120">120</option>
                 </select>
             </form>
         </div>
         <div>
             <form method="post">
-                <label for="page-num">Page number</label>
+                <button onclick="pageUp(true)">Next page</button>
+                <button onclick="pageUp(true)" class="pagination">&#x27F5;</button>
                 <select id="page-num" name="page-num"></select>
+                <button onclick="pageUp(false)" class="pagination">&#x27F6;</button>
             </form>  
         </div>
     </section>
@@ -32,8 +30,8 @@
     </section>
 
     <section class="mtgDbSubNav">
-        <button onclick="pageUp(true)">Next page</button>
-        <button onclick="pageUp(false)">Previous page</button>
+        <button onclick="pageUp(true)" class="pagination">&#x27F5;</button>
+        <button onclick="pageUp(false)" class="pagination">&#x27F6;</button>
     </section>
 
     <div id="snackbar">
