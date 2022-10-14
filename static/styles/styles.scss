@@ -166,7 +166,6 @@ nav {
     position: absolute;
     background-color: var(--primary-color);
     min-width: 160px;
-    border: solid var(--secondary-color);
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     a {
@@ -635,41 +634,20 @@ footer {
 .mtgDbSubNav {
     display: flex;
     justify-content: center;
-    > * {
-        padding: 10px;
-        margin: 20px 5%;
-        font-size: 1.2rem;
+    .pagination {
+        background-color: white;
         border: solid black;
-        background: white;
+        padding: 0 5px;
+        font-size: 1.6rem;
         border-radius: 15px;
         -webkit-border-radius: 15px;
         -moz-border-radius: 15px;
         -ms-border-radius: 15px;
         -o-border-radius: 15px;
     }
-
-    &__top-buttons {
-        border: none;
-        background: none;
-        border-radius: 0;
-        -webkit-border-radius: 0;
-        -moz-border-radius: 0;
-        -ms-border-radius: 0;
-        -o-border-radius: 0;
-        > * {
-            padding: 10px;
-            margin: 0 20px;
-            font-size: 1.2rem;
-            border: solid black;
-            background: white;
-            border-radius: 15px;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            -ms-border-radius: 15px;
-            -o-border-radius: 15px;
-        }
-    }
 }
+
+
 
 // media queries
 
