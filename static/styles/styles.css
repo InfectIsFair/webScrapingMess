@@ -224,7 +224,7 @@ nav ul div {
 }
 
 .dropdownContent a:hover {
-  background-color: #ddd;
+  background-color: var(--secondary-color);
 }
 
 .dropdownContent :not(:last-child) {
@@ -792,12 +792,12 @@ footer div {
 #card-list {
   display: -ms-grid;
   display: grid;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  margin: 7%;
-  -ms-grid-columns: 360px 360px 360px 360px;
-      grid-template-columns: 360px 360px 360px 360px;
+  -ms-grid-columns: auto auto auto auto;
+      grid-template-columns: auto auto auto auto;
+  margin: 2% 7%;
+  -webkit-column-gap: 25px;
+          column-gap: 25px;
+  row-gap: 50px;
 }
 
 #card-list img {
@@ -830,6 +830,43 @@ footer div {
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
+}
+
+.mtgDbSubNav .pagination-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mtgDbSubNav .pagination-div > * {
+  margin: 8px;
+}
+
+#page-num, #card-view {
+  width: 56.3px;
+  text-align: center;
+  height: 46px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+#page-num {
+  font-size: 1.4rem;
+  background: white;
+  border: solid black;
+}
+
+#card-view {
+  font-size: 1rem;
+  background: none;
+  border: none;
+  margin: 8px;
 }
 
 @media (max-width: 1450px) {
