@@ -1,6 +1,7 @@
+from crypt import methods
 from flask import Flask, render_template, url_for
 import orderSetCSVByDate
-import sqlCreateDb
+# import sqlCreateDb
 
 def importCSV():
     returnList = []
@@ -45,6 +46,10 @@ orderedMtg = orderMtgCsv(cards, sets)
 orderedMtgLength = len(orderedMtg)
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 @app.route('/')
 def index():
@@ -74,8 +79,10 @@ def singleCards(magic_card_id):
     for card in cards:
         if card[0] == magic_card_id and card[1] == "MTG":
             return render_template("magic-card.html", value=card, setCSV=sets, cards=cards)
+        else:
+            return render_template("404.html")
     
 
 if __name__ == "__main__":
-    sqlCreateDb.createTable
+    # sqlCreateDb.main()
     app.run(debug=True)

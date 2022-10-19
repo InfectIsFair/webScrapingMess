@@ -13,7 +13,7 @@ def connectToDb(dbDirectory):
 
 
 def insertCardFile(conn, file):
-    sql = """ INSERT INTO cardTable(cardId, tcgId, cardName, rarityId, setId, price, textId, oracleId)
+    sql = """ INSERT INTO cardTable(cardId, tcgId, cardName, rarityId, setId, price, textTableLink)
               VALUES(?, ?, ?, ?, ?, ?, ?) """
 
     c = conn.cursor()
@@ -24,8 +24,8 @@ def insertCardFile(conn, file):
 
 
 def insertSetFile(conn, file):
-    sql = """ INSERT INTO setTable(setId, setName, dateOfRelease, cardsInSet)
-              VALUES(?, ?, ?, ?) """
+    sql = """ INSERT INTO setTable(setName, dateOfRelease, cardsInSet)
+              VALUES(?, ?, ?) """
 
     c = conn.cursor()
     c.execute(sql, file)
@@ -35,8 +35,8 @@ def insertSetFile(conn, file):
 
 
 def insertRarityFile(conn, file):
-    sql = """ INSERT INTO rarityTable(rarityId, rarity)
-              VALUES(?, ?) """
+    sql = """ INSERT INTO rarityTable(rarity)
+              VALUES(?) """
 
     c = conn.cursor()
     c.execute(sql, file)
@@ -45,8 +45,19 @@ def insertRarityFile(conn, file):
     return c.lastrowid
 
 
-def insertTextFile(conn, file):
-    sql = """ INSERT INTO textTable(textId, text, oracleOrFlavour)
+def insertTextTableFile(conn, file):
+    sql = """ INSERT INTO textTable(textTableLink, textValueId)
+              VALUES(?, ?) """
+    
+    c = conn.cursor()
+    c.execute(sql, file)
+    conn.commit()
+    
+    return c.lastrowid
+
+
+def insertTextValue(conn, file):
+    sql = """ INSERT INTO textValues(textValueId, text, textOrFlavour)
               VALUES(?, ?, ?) """
     
     c = conn.cursor()
@@ -56,20 +67,9 @@ def insertTextFile(conn, file):
     return c.lastrowid
 
 
-def insertFlavourFile(conn, file):
-    sql = """ INSERT INTO flavourTable(textId, text)
-              VALUES(?, ?) """
-    
-    c = conn.cursor()
-    c.execute(sql, file)
-    conn.commit()
-    
-    return c.lastrowid
-
-
 def insertTcgFile(conn, file):
-    sql = """ INSERT INTO tcgTable(tcgId, tcg)
-              VALUES(?, ?) """
+    sql = """ INSERT INTO tcgTable(tcg)
+              VALUES(?) """
 
     c = conn.cursor()
     c.execute(sql, file)
@@ -77,33 +77,49 @@ def insertTcgFile(conn, file):
     
     return c.lastrowid
 
+"""
+example of how to insert per table
 
-# example of how to insert per table
+Use this | to find the Id value of the last inserted element, allowing you to fill in foreign keys
+         V
 
-# start of all
+SCOPE_IDENTITY() returns the last identity value generated for any table in the current session and the current scope. Generally what you want to use.
 
-# database = "cards.db"
-# conn = connectToDb(database)
-# with conn:
 
-# insert card
-    # card = ("Mxln120", 1, "Sanctum Seeker", 1, 0.66, 1, 2)
-    # insertCardFile(conn, card)
+start of all insert functions:
 
-# insert set
-    # set = (1, "XLN", "2017-09-29", 289)
-    # insertSetFile(conn, set)
+database = "cards.db"
+conn = connectToDb(database)
+with conn:
 
-# insert rarity
-    # rarity = (1, "Rare")
-    # insertRarityFile(conn, rarity)
+insert card:
+    tcgId = 1
+    rarityId = 1
+    setId = 1
+    textTableLink = 1
+    card = ("Mxln120", tcgId, "Sanctum Seeker", rarityId, setId, 0.66, textTableLink)
+    insertCardFile(conn, card)
 
-# insert text (oracle & flavour)
-    # oracle = (1, "Litmus", 0)
-    # flavour = (2, "Slithering Slippery Slinking Sneaky Superficial Sugestive Smart Snake", 1)
-    # insertTextFile(conn, oracle)
-    # insertTextFile(conn, flavour)
+insert set:
+    set = ("XLN", "2017-09-29", 289)
+    insertSetFile(conn, set)
 
-# insert tcg
-    # tcg = (1, "MTG")
-    # insertTcgFile(conn, tcg)
+insert rarity:
+    rarity = ("Rare")
+    insertRarityFile(conn, rarity)
+
+insert text:
+    text = "Whenever this creature, die"
+    flavour = "Litmus test"
+
+    textTextValue = (text, 0)
+    flavourTextValue = (flavour, 1)
+
+    insertTextValue(conn, textTextValue)
+    insertTextValue(conn, flavourTextValue)
+
+
+insert tcg:
+    tcg = ("MTG")
+    insertTcgFile(conn, tcg)
+"""

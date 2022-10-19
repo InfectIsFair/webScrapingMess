@@ -25,14 +25,13 @@ def main():
                            cardId nchar(9) PRIMARY KEY,
                            setId smallint NOT NULL,
                            cardName nchar(80) NOT NULL,
-                           rarityId smallint(3) NOT NULL,
+                           rarityId smallint NOT NULL,
                            price money NOT NULL,
-                           textId int NOT NULL,
+                           textTableLink smallint NOT NULL,
                            flavourId int NOT NULL,
-                           tcgId smallint(10) NOT NULL,
+                           tcgId smallint NOT NULL,
                            FOREIGN KEY (rarityId) REFERENCES rarityTable (rarityId),
-                           FOREIGN KEY (textId) REFERENCES textTable (textId),
-                           FOREIGN KEY (flavourId) REFERENCES flavourTable (flavourId),
+                           FOREIGN KEY (textTableLink) REFERENCES textTable (textTableLink),
                            FOREIGN KEY (tcgId) REFERENCES tcgTable (tcgId),
                            FOREIGN KEY (setId) REFERENCES setTable (setId)
                        );"""
@@ -41,31 +40,33 @@ def main():
                            setId smallint PRIMARY KEY,
                            setName nchar(10) NOT NULL,
                            dateOfRelease date NOT NULL,
-                           cardsInSet smallint(4) NOT NULL
+                           cardsInSet smallint NOT NULL
                        );"""
     
     sqlCreateRarity = """ CREATE TABLE IF NOT EXISTS rarityTable (
-                              rarityId smallInt(3) PRIMARY KEY,
+                              rarityId smallInt PRIMARY KEY,
                               rarity nchar(35) NOT NULL
                           );"""
 
-    sqlCreateText = """ CREATE TABLE IF NOT EXISTS textTable (
-                            textId int PRIMARY KEY,
-                            text nchar(1200) NOT NULL,
+    sqlCreateTextTable = """ CREATE TABLE IF NOT EXISTS textTable (
+                             textTableLink smallint PRIMARY KEY,
+                             textValueId int NOT NULL,
+                             FOREIGN KEY (textValueId) REFERENCES textValues (textValueId)
                         );"""
 
-    sqlCreateFlavour = """ CREATE TABLE IF NOT EXISTS flavourTable (
-                            flavourId int PRIMARY KEY,
-                            flavour nchar(1200) NOT NULL,
+    sqlCreateTextValue = """ CREATE TABLE IF NOT EXISTS textValues (
+                             textValueId int PRIMARY KEY,
+                             text nchar(1200) NOT NULL,
+                             textOrFlavour bit NOT NULL
                         );"""
 
     sqlCreateTcg = """ CREATE TABLE IF NOT EXISTS tcgTable (
-                           tcgId smallint(10) PRIMARY KEY,
+                           tcgId smallint PRIMARY KEY,
                            tcg nchar(8) NOT NULL
                        );"""
 
     print(sqlite3.version)
-    sqlCreateList = [sqlCreateCard, sqlCreateSet, sqlCreateRarity, sqlCreateText, sqlCreateFlavour, sqlCreateTcg]
+    sqlCreateList = [sqlCreateCard, sqlCreateSet, sqlCreateRarity, sqlCreateTextTable, sqlCreateTextValue, sqlCreateTcg]
 
     for table in sqlCreateList:
         createTable(database, table)

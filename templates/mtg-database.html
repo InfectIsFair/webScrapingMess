@@ -15,13 +15,10 @@
                 </select>
             </form>
         </div>
-        <div>
-            <form method="post">
-                <button onclick="pageUp(true)">Next page</button>
-                <button onclick="pageUp(true)" class="pagination">&#x27F5;</button>
-                <select id="page-num" name="page-num"></select>
-                <button onclick="pageUp(false)" class="pagination">&#x27F6;</button>
-            </form>  
+        <div class="pagination-div">
+            <button onclick="pageUp(false)" class="pagination">&#x27F5;</button>
+            <input type="text" id="page-num" name="page-num" value="{{pageNum}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" min="1">
+            <button onclick="pageUp(true)" class="pagination">&#x27F6;</button>
         </div>
     </section>
 
@@ -30,8 +27,8 @@
     </section>
 
     <section class="mtgDbSubNav">
-        <button onclick="pageUp(true)" class="pagination">&#x27F5;</button>
-        <button onclick="pageUp(false)" class="pagination">&#x27F6;</button>
+        <button onclick="pageUp(false)" class="pagination">&#x27F5;</button>
+        <button onclick="pageUp(true)" class="pagination">&#x27F6;</button>
     </section>
 
     <div id="snackbar">
@@ -49,48 +46,68 @@
     let cards = {{ cards|tojson }};
     let pageNum = {{ pageNum|tojson }};
     let totalCards = {{ length|tojson }};
-    let cardViewForm = document.getElementById("card-view");
-    let cardPageForm = document.getElementById("page-num");
-    let cardView = sessionStorage['cardView'];
-    if (cardView == null) {
-        cardView = 60;
-        sessionStorage['cardView'] = 60;
-    } else {
-        sessionStorage['cardView'] = cardView;
-    }
-
-    let totalCurrentPages = totalCards / cardView;
-    for (let i = 1; i < (Math.ceil(totalCurrentPages) + 1); i++) {
-        let pageForm = document.getElementById("page-num");
-        let option = document.createElement("option");
-        option.textContent = "Page ".concat(i);
-        option.value = "page".concat(i);
-        option.id = "page".concat(i);
-
-        pageForm.appendChild(option);
-    }
-
-    document.getElementById(sessionStorage['cardView']).selected = true;
-
-    document.getElementById("page".concat(pageNum)).selected = true
+    console.log(pageNum);
+    console.log(typeof pageNum);
+    try {
+        let cardViewForm = document.getElementById("card-view");
+        let cardPageForm = document.getElementById("page-num");
+        let cardView = sessionStorage['cardView'];
+        if (cardView == null) {
+            cardView = 60;
+            sessionStorage['cardView'] = 60;
+        } else {
+            sessionStorage['cardView'] = cardView;
+        }
     
-    cardViewForm.addEventListener('click', (function() {
-        cardView = Number(this.value);
-        sessionStorage['cardView'] = cardView;
-        let toast = document.getElementById("update");
-        window.location.href = "/magic-card-database/page1/"
-        toast.className = "show";
-        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+    
+        let totalCurrentPages = totalCards / cardView;
+    
+        document.getElementById(sessionStorage['cardView']).selected = true;
+        
+        cardViewForm.addEventListener('click', (function() {
+            cardView = Number(this.value);
+            sessionStorage['cardView'] = cardView;
+            window.location.href = "/magic-card-database/page1/"
+            let toast = document.getElementById("update");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+            main(cardView);
+        }));
+    
+        cardPageForm.addEventListener('keydown', (function(e) {
+            if (e.code === "Enter" || e.code === "NumpadEnter") {
+                if (Number(this.value) >= 1 && Number(this.value) <= totalCurrentPages) {
+                    let pageVal = this.value;
+                    window.location.href = "/magic-card-database/".concat("page", pageVal, "/");
+                    main(cardView);
+                } else {
+                    let toast = document.getElementById("snackbar");
+                    toast.className = "show";
+                    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+                }
+            }
+        }));
+    
+        cardPageForm.addEventListener("focus", (function(event) {
+            event.target.value = "";
+        }));
+    
+        cardPageForm.addEventListener("blur", (function(event) {
+            event.target.value = "{{ pageNum }}";
+        }));
+    
         main(cardView);
-    }));
+        let cardCheck = document.getElementById("card-list").children;
+        console.log(cardCheck.length);
 
-    cardPageForm.addEventListener('click', (function() {
-        let pageVal = this.value;
-        window.location.href = "/magic-card-database/".concat(pageVal, "/");
-        main(cardView);
-    }));
-
-    main(cardView);
+        console.log(pageNum)
+        if (!(pageNum.match(/^\d+$/))) {
+            console.log("hi");
+            window.location.href = "/404/";
+        }
+    } catch (Error) {
+        window.location.href = "/404/";
+    }
 
     function main(cardView) {
         let masterDiv = document.getElementById("card-list");
@@ -111,24 +128,22 @@
             masterDiv.appendChild(a);
             a.appendChild(img);
 
-            lowerCount += 1;
+            lowerCount++;
         }
-
-
     }
 
     function pageUp(up) {
         let mtgTotalCards = {{ length|tojson }};
         let funcPageNum = Number({{ pageNum|tojson }});
         let dnsExtension = "/magic-card-database/page";
-        sessionCardView = sessionStorage['cardView'];
+        let sessionCardView = parseInt(sessionStorage['cardView']);
         if (up && funcPageNum < (mtgTotalCards / sessionCardView)) {
             dnsExtension = dnsExtension.concat(funcPageNum + 1);
-            dnsExtension = dnsExtension.concat("/")
+            dnsExtension = dnsExtension.concat("/");
             window.location.href = dnsExtension;
         } else if (funcPageNum > 1 && !up) {
             dnsExtension = dnsExtension.concat(funcPageNum - 1);
-            dnsExtension = dnsExtension.concat("/")
+            dnsExtension = dnsExtension.concat("/");
             window.location.href = dnsExtension;
         } else {
             setCheckDown = true;
